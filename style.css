@@ -1254,10 +1254,16 @@ a:hover .note-title {
     }
 
     /* 3. Bottom Menu Grid Fixes */
+    .grid-item {
+        padding: 12px 4px !important;
+    }
+
     .grid-item span {
-        font-size: 12px !important;
-        white-space: nowrap !important;
-        padding: 0 4px;
+        font-size: 11px !important;
+        white-space: normal !important;
+        line-height: 1.2;
+        padding: 0 2px;
+        text-align: center;
     }
 
     .ios-bottom-menu {
