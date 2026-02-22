@@ -431,13 +431,13 @@ a:hover .note-title {
     left: 50%;
 }
 
-/* Left Arrows - Pointing DOWN-RIGHT (to Center) */
+/* Base Leftwards Arrow - Flipped to point INWARDS (PC) */
 .arrow-cross-1,
 .arrow-cross-3 {
-    transform: translateX(-50%) translateX(-140px) rotate(15deg);
+    transform: translateX(-50%) translateX(-140px) scaleX(-1) rotate(15deg);
 }
 
-/* Right Arrows - Pointing DOWN-LEFT (to Center) */
+/* Base Rightwards Arrow - Pointing INWARDS (PC) */
 .arrow-cross-2,
 .arrow-cross-4 {
     transform: translateX(-50%) translateX(140px) scaleX(-1) rotate(15deg);
@@ -1300,12 +1300,14 @@ a:hover .note-title {
     .scribble-arrow {
         width: 35px;
         height: 85px;
+        /* Shortened to avoid button overlap */
         top: 70px;
     }
 
+    /* Target Centric Positioning for Mobile */
     .arrow-cross-1,
     .arrow-cross-3 {
-        transform: translateX(-50%) translateX(-120px) rotate(15deg);
+        transform: translateX(-50%) translateX(-120px) scaleX(-1) rotate(15deg);
     }
 
     .arrow-cross-2,
@@ -1318,6 +1320,7 @@ a:hover .note-title {
         align-items: stretch;
         padding: 0 20px;
         margin-top: 100px;
+        /* Better spacing for shorter arrows */
     }
 
     /* 3. Bottom Menu Grid Fixes (Restored to Grid but with Wrap) */
