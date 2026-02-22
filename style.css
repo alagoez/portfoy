@@ -1010,6 +1010,13 @@ a:hover .note-title {
     opacity: 0.7;
 }
 
+/* Link emphasis in bottom menu */
+.ios-bottom-menu .menu-item:not(.start-item-v2) span {
+    border-bottom: 1.5px dashed var(--accent);
+    padding-bottom: 2px;
+    display: inline-block;
+}
+
 /* Bottom Menu Specific Styles */
 .ios-bottom-menu {
     top: auto;
@@ -1284,8 +1291,11 @@ a:hover .note-title {
     }
 
     .grid-item span::after {
-        display: none;
-        /* Remove red scribble circles for a cleaner list look on mobile */
+        display: block !important;
+        /* Restore red scribble circles on mobile */
+        width: 110%;
+        height: 6px;
+        bottom: -1px;
     }
 
     .ios-bottom-menu {
