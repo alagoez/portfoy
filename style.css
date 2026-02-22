@@ -423,8 +423,8 @@ a:hover .note-title {
     z-index: 2;
     filter: drop-shadow(0 0 6px rgba(198, 40, 40, 0.4));
     opacity: 0.8;
-    width: 45px;
-    height: 85px;
+    width: 55px;
+    height: 110px;
     top: 55px;
     left: 50%;
 }
@@ -1278,7 +1278,10 @@ a:hover .note-title {
 
     .scribble-circle {
         font-size: 17px !important;
-        max-width: 85vw;
+        max-width: 72vw;
+        /* Narrower text container to prevent scribble overflow */
+        display: inline-block;
+        line-height: 1.3;
     }
 
     .cta-texts-top .cta-text-wrapper-v4:last-child span {
@@ -1286,31 +1289,35 @@ a:hover .note-title {
     }
 
     .scribble-circle::after {
-        width: 140%;
-        height: 220%;
+        width: 125%;
+        /* Tighter scribble width to keep it on screen */
+        height: 280%;
+        /* Taller scribble for better coverage */
     }
 
     .scribble-arrow {
-        width: 30px;
-        height: 70px;
-        top: 65px;
+        width: 45px;
+        /* Wider and longer arrows on mobile */
+        height: 120px;
+        top: 75px;
     }
 
     .arrow-cross-1,
     .arrow-cross-3 {
-        transform: translateX(-50%) translateX(-15px) rotate(20deg);
+        transform: translateX(-50%) translateX(-25px) rotate(15deg);
     }
 
     .arrow-cross-2,
     .arrow-cross-4 {
-        transform: translateX(-50%) translateX(15px) scaleX(-1) rotate(20deg);
+        transform: translateX(-50%) translateX(25px) scaleX(-1) rotate(15deg);
     }
 
     .contact-actions-v4 {
         flex-direction: column;
         align-items: stretch;
         padding: 0 20px;
-        margin-top: 80px;
+        margin-top: 140px;
+        /* More space for longer arrows */
     }
 
     /* 3. Bottom Menu Grid Fixes (Restored to Grid but with Wrap) */
