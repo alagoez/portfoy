@@ -626,8 +626,8 @@ a:hover .note-title {
     -webkit-backdrop-filter: blur(20px);
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    /* Perfect vertical centering */
+    align-items: flex-start;
+    padding-top: 12px;
     border-top: 0.5px solid var(--separator);
     color: var(--accent);
     z-index: 1000;
@@ -1253,17 +1253,39 @@ a:hover .note-title {
         /* Arrows can be too busy on very small screens, hiding for cleaner look */
     }
 
-    /* 3. Bottom Menu Grid Fixes */
+    /* 3. Bottom Menu Grid Fixes (Restored to Grid but with Wrap) */
+    .menu-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.5px !important;
+    }
+
     .grid-item {
-        padding: 12px 4px !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 14px 8px !important;
+        gap: 8px !important;
+        text-align: center !important;
+    }
+
+    .grid-item i {
+        width: 20px !important;
+        height: 20px !important;
+        opacity: 0.8;
     }
 
     .grid-item span {
-        font-size: 11px !important;
+        font-size: 13px !important;
         white-space: normal !important;
         line-height: 1.2;
-        padding: 0 2px;
-        text-align: center;
+        padding: 0 4px !important;
+        text-align: center !important;
+        word-break: break-word;
+    }
+
+    .grid-item span::after {
+        display: none;
+        /* Remove red scribble circles for a cleaner list look on mobile */
     }
 
     .ios-bottom-menu {
