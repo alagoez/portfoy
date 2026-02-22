@@ -512,62 +512,54 @@
 
         // Top Menu toggle
         document.getElementById('more-menu-trigger').addEventListener('click', (e) => {
+            const menu = document.getElementById('nav-menu');
+            if (!menu.contains(e.target)) {
+                e.stopPropagation();
+                menu.classList.toggle('show');
+                document.getElementById('bottom-nav-menu').classList.remove('show');
+            }
+        });
+
+        document.getElementById('nav-menu').addEventListener('click', (e) => {
             e.stopPropagation();
-            document.getElementById('nav-menu').classList.toggle('show');
-            document.getElementById('bottom-nav-menu').classList.remove('show');
         });
 
         // List View button functionality (Toggle All Goals)
         document.getElementById('list-view-trigger').addEventListener('click', (e) => {
             e.stopPropagation();
-
-            // Scroll to goals
             scrollToSection('goals-sect');
-
-            // Find all goal chapters
             const allChapters = document.querySelectorAll('.chapter-accordion');
-
-            // Check if any chapter is currently closed
             const anyClosed = Array.from(allChapters).some(chapter => !chapter.classList.contains('active'));
-
-            // If any are closed, open them all. If all are open, close them all.
             allChapters.forEach(chapter => {
-                if (anyClosed) {
-                    chapter.classList.add('active');
-                } else {
-                    chapter.classList.remove('active');
-                }
+                if (anyClosed) chapter.classList.add('active');
+                else chapter.classList.remove('active');
             });
         });
 
         // Grid View button functionality (Toggle All)
         document.getElementById('grid-view-trigger').addEventListener('click', (e) => {
             e.stopPropagation();
-
-            // Scroll to projects
             scrollToSection('projects-sect');
-
-            // Find all projects
             const allProjects = document.querySelectorAll('.project-accordion');
-
-            // Check if any project is currently closed
             const anyClosed = Array.from(allProjects).some(project => !project.classList.contains('active'));
-
-            // If any are closed, open them all. If all are open, close them all.
             allProjects.forEach(project => {
-                if (anyClosed) {
-                    project.classList.add('active');
-                } else {
-                    project.classList.remove('active');
-                }
+                if (anyClosed) project.classList.add('active');
+                else project.classList.remove('active');
             });
         });
 
         // Bottom Menu toggle
         document.getElementById('bottom-trigger').addEventListener('click', (e) => {
+            const menu = document.getElementById('bottom-nav-menu');
+            if (!menu.contains(e.target)) {
+                e.stopPropagation();
+                menu.classList.toggle('show');
+                document.getElementById('nav-menu').classList.remove('show');
+            }
+        });
+
+        document.getElementById('bottom-nav-menu').addEventListener('click', (e) => {
             e.stopPropagation();
-            document.getElementById('bottom-nav-menu').classList.toggle('show');
-            document.getElementById('nav-menu').classList.remove('show');
         });
 
         // Hide menus when clicking anywhere else
