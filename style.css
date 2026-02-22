@@ -416,7 +416,7 @@ a:hover .note-title {
     margin-top: 40px;
 }
 
-/* Laser-Aimed 4-Arrow System - Pointing EXACTLY to Buttons on PC */
+/* Laser-Aimed 4-Arrow System - Shortened to not overlap button text */
 .scribble-arrow {
     position: absolute;
     pointer-events: none;
@@ -424,8 +424,10 @@ a:hover .note-title {
     filter: drop-shadow(0 0 6px rgba(198, 40, 40, 0.4));
     opacity: 0.8;
     width: 50px;
-    height: 120px;
-    top: 65px;
+    height: 95px;
+    /* Shortened */
+    top: 60px;
+    /* Positioned perfectly below text */
     left: 50%;
 }
 
