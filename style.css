@@ -385,23 +385,36 @@ a:hover .note-title {
     text-transform: uppercase;
 }
 
-.cta-center-group {
-    position: relative;
+.cta-container-v3 {
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+    margin: 60px 0;
+    align-items: center;
+}
+
+.cta-block {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 48px;
-    /* High gap to move 'BİR FİKRİM VAR !!' down */
-    margin: 32px 0 48px 0;
-    text-align: center;
+    gap: 40px;
+    width: 100%;
+}
+
+.cta-text-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .scribble-circle {
     position: relative;
     padding: 8px 12px;
-    font-size: 15px;
+    font-size: 16px;
     color: var(--text-primary);
     z-index: 1;
+    text-align: center;
 }
 
 .scribble-circle::after {
@@ -411,10 +424,7 @@ a:hover .note-title {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 210%;
-    /* Much broader to fully encompass long sentences */
     height: 350%;
-    /* Taller to provide enough vertical space */
-    /* Simplified 2-layer dark red felt-tip pen scribble SVG for a cleaner look */
     background-image: url("data:image/svg+xml,%3Csvg width='400' height='100' viewBox='0 0 400 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 50 C20 15, 100 10, 200 10 C300 10, 380 15, 380 50 C380 85, 300 90, 200 90 C100 90, 20 85, 20 50 Z' stroke='%23C62828' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='0.7' /%3E%3Cpath d='M25 55 C25 25, 105 15, 205 15 C305 15, 375 25, 375 55 C375 85, 305 85, 205 85 C105 85, 25 85, 25 55 Z' stroke='%23B71C1C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.5' /%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -422,29 +432,27 @@ a:hover .note-title {
     pointer-events: none;
 }
 
-/* Scribble Arrows */
 .scribble-arrow {
     position: absolute;
     pointer-events: none;
     z-index: 2;
     filter: drop-shadow(0 0 8px rgba(198, 40, 40, 0.6));
-    /* Sophisticated glow */
     opacity: 0.8;
 }
 
 .arrow-to-ig {
-    top: 50px;
-    right: 25px;
-    width: 50px;
-    height: 100px;
+    top: 55px;
+    right: 35%;
+    width: 40px;
+    height: 70px;
     transform: rotate(10deg);
 }
 
 .arrow-to-email {
-    top: 50px;
-    left: 25px;
-    width: 50px;
-    height: 100px;
+    top: 55px;
+    left: 35%;
+    width: 40px;
+    height: 70px;
     transform: rotate(-10deg) scaleX(-1);
 }
 
@@ -1227,37 +1235,42 @@ a:hover .note-title {
     }
 
     /* 2. CTA Section & Scribble Overlap Fixes */
-    .section-label {
-        margin-bottom: 12px;
-        position: relative;
-        z-index: 10;
+    .cta-container-v3 {
+        gap: 90px;
+        margin-top: 50px;
     }
 
-    .cta-center-group {
-        margin-top: 100px;
-        /* Significant top margin to clear the red scribble circles on mobile */
-        margin-bottom: 60px;
-        gap: 100px;
-        /* Space between circled texts */
+    .cta-block {
+        gap: 50px;
     }
 
     .scribble-circle {
-        font-size: 13px;
-        display: inline-block;
-        max-width: 85vw;
-        line-height: 1.3;
+        font-size: 17px !important;
+        max-width: 80vw;
+        line-height: 1.2;
     }
 
     .scribble-circle::after {
-        width: 130%;
-        /* Tighter width to prevent off-screen overflow */
-        height: 250%;
-        /* Tighter height to prevent vertical overlap */
+        width: 140%;
+        height: 220%;
     }
 
     .scribble-arrow {
-        display: none;
-        /* Arrows can be too busy on very small screens, hiding for cleaner look */
+        display: block !important;
+        width: 35px;
+        height: 60px;
+    }
+
+    .arrow-to-ig {
+        top: 60px;
+        right: 15%;
+        transform: rotate(20deg);
+    }
+
+    .arrow-to-email {
+        top: 45px;
+        left: 15%;
+        transform: rotate(-25deg) scaleX(-1);
     }
 
     /* 3. Bottom Menu Grid Fixes (Restored to Grid but with Wrap) */
