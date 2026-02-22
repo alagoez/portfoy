@@ -416,29 +416,30 @@ a:hover .note-title {
     margin-top: 40px;
 }
 
-/* Symmetric 4-Arrow System - Pointing Directly to Buttons on PC */
+/* Symmetric 4-Arrow System - Clean framing on PC (No overlap) */
 .scribble-arrow {
     position: absolute;
     pointer-events: none;
     z-index: 2;
     filter: drop-shadow(0 0 6px rgba(198, 40, 40, 0.4));
     opacity: 0.8;
-    width: 60px;
+    width: 50px;
     height: 130px;
-    top: 75px;
+    top: 60px;
+    /* Positioned below text top line */
     left: 50%;
 }
 
-/* Base Leftwards Arrow - Pointing to IG button on PC */
+/* Base Leftwards Arrow - Pushed far out on PC to avoid text boxes */
 .arrow-cross-1,
 .arrow-cross-3 {
-    transform: translateX(-50%) translateX(-140px) rotate(20deg);
+    transform: translateX(-50%) translateX(-280px) rotate(10deg);
 }
 
-/* Base Rightwards Arrow (Mirrored) - Pointing to Email button on PC */
+/* Base Rightwards Arrow (Mirrored) - Pushed far out on PC to avoid text boxes */
 .arrow-cross-2,
 .arrow-cross-4 {
-    transform: translateX(-50%) translateX(140px) scaleX(-1) rotate(20deg);
+    transform: translateX(-50%) translateX(280px) scaleX(-1) rotate(10deg);
 }
 
 .scribble-circle {
