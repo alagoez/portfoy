@@ -416,29 +416,29 @@ a:hover .note-title {
     margin-top: 40px;
 }
 
-/* Clean 4-Arrow System - Pointing DOWN to Buttons */
+/* Laser-Aimed 4-Arrow System - Pointing EXACTLY to Buttons on PC */
 .scribble-arrow {
     position: absolute;
     pointer-events: none;
     z-index: 2;
     filter: drop-shadow(0 0 6px rgba(198, 40, 40, 0.4));
     opacity: 0.8;
-    width: 60px;
-    height: 140px;
-    top: 60px;
+    width: 50px;
+    height: 120px;
+    top: 65px;
     left: 50%;
 }
 
-/* Base Left-Side Arrows - Pointing DOWN & RIGHT to Buttons */
+/* Left Arrows - Pointing DOWN-RIGHT (to IG) */
 .arrow-cross-1,
 .arrow-cross-3 {
-    transform: translateX(-50%) translateX(-250px) rotate(15deg);
+    transform: translateX(-50%) translateX(-140px) scaleX(-1) rotate(15deg);
 }
 
-/* Base Right-Side Arrows - Pointing DOWN & LEFT to Buttons */
+/* Right Arrows - Pointing DOWN-LEFT (to Email) */
 .arrow-cross-2,
 .arrow-cross-4 {
-    transform: translateX(-50%) translateX(250px) scaleX(-1) rotate(15deg);
+    transform: translateX(-50%) translateX(140px) scaleX(-1) rotate(15deg);
 }
 
 .scribble-circle {
