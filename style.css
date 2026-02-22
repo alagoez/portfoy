@@ -431,13 +431,13 @@ a:hover .note-title {
     left: 50%;
 }
 
-/* Left Arrows - Pointing DOWN-RIGHT (to IG) */
+/* Left Arrows - Pointing DOWN-RIGHT (to Center) */
 .arrow-cross-1,
 .arrow-cross-3 {
-    transform: translateX(-50%) translateX(-140px) scaleX(-1) rotate(15deg);
+    transform: translateX(-50%) translateX(-140px) rotate(15deg);
 }
 
-/* Right Arrows - Pointing DOWN-LEFT (to Email) */
+/* Right Arrows - Pointing DOWN-LEFT (to Center) */
 .arrow-cross-2,
 .arrow-cross-4 {
     transform: translateX(-50%) translateX(140px) scaleX(-1) rotate(15deg);
@@ -1299,25 +1299,25 @@ a:hover .note-title {
 
     .scribble-arrow {
         width: 35px;
-        height: 120px;
-        top: 80px;
+        height: 85px;
+        top: 70px;
     }
 
     .arrow-cross-1,
     .arrow-cross-3 {
-        transform: translateX(-50%) translateX(-130px) rotate(15deg);
+        transform: translateX(-50%) translateX(-120px) rotate(15deg);
     }
 
     .arrow-cross-2,
     .arrow-cross-4 {
-        transform: translateX(-50%) translateX(130px) scaleX(-1) rotate(15deg);
+        transform: translateX(-50%) translateX(120px) scaleX(-1) rotate(15deg);
     }
 
     .contact-actions-v4 {
         flex-direction: column;
         align-items: stretch;
         padding: 0 20px;
-        margin-top: 140px;
+        margin-top: 100px;
     }
 
     /* 3. Bottom Menu Grid Fixes (Restored to Grid but with Wrap) */
