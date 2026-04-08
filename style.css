@@ -1365,3 +1365,46 @@ a:hover .note-title {
         right: -10px;
     }
 }
+
+/* Music Toggle Button */
+.music-btn {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(44, 44, 46, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.music-btn:hover {
+    background-color: rgba(58, 58, 60, 0.95);
+    transform: scale(1.08);
+    border-color: var(--accent);
+}
+
+.music-btn.playing {
+    color: var(--accent);
+    border-color: var(--accent);
+    animation: music-pulse 2s ease-in-out infinite;
+}
+
+@keyframes music-pulse {
+    0%, 100% {
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+        box-shadow: 0 2px 20px rgba(255, 204, 0, 0.3);
+    }
+}
