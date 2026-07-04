@@ -944,6 +944,22 @@ a:hover .note-title {
     opacity: 0.5;
 }
 
+.alta-lead-visual {
+    background: radial-gradient(circle at 30% 30%, #1a1a1a, #000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
+    min-height: 120px;
+}
+
+.alta-lead-logo-img {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    display: block;
+}
+
 @media (max-width: 600px) {
     .project-grid {
         flex-direction: column;
