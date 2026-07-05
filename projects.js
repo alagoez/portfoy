@@ -42,7 +42,7 @@
             links: [{ label: "walking-art.vercel.app", url: "https://walking-art.vercel.app", type: "web" }]
         },
         {
-            name: "NRC.ai", tag: "AI Startup", year: "2026", status: "aktif",
+            name: "NRC.ai", tag: "AI Startup", year: "2026", status: "satildi",
             logo: "nrc.png",
             thumb: { type: "img", src: "nrc-mobile.png" },
             media: { type: "img", src: "nrc-desktop.png" },
