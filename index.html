@@ -612,7 +612,7 @@
     </div>
 
     <!-- Music Toggle Button -->
-    <audio id="bg-music" src="portses.m4a" loop preload="auto"></audio>
+    <audio id="bg-music" src="portses.m4a" loop preload="auto" autoplay></audio>
     <button id="music-toggle" class="music-btn" aria-label="Müzik aç/kapat">
         <svg id="music-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 18V5l12-2v13"></path>
@@ -644,7 +644,24 @@
             }).catch(() => {});
         }
 
-        // Try to autoplay on first user interaction
+        // Keep button state in sync with actual playback
+        bgMusic.addEventListener('play', () => {
+            musicPlaying = true;
+            musicBtn.classList.add('playing');
+            iconOn.style.display = 'block';
+            iconOff.style.display = 'none';
+        });
+        bgMusic.addEventListener('pause', () => {
+            musicPlaying = false;
+            musicBtn.classList.remove('playing');
+            iconOn.style.display = 'none';
+            iconOff.style.display = 'block';
+        });
+
+        // Try to start music immediately on page load
+        startMusic();
+
+        // Fallback: start on first user interaction if autoplay was blocked
         function autoplayOnce() {
             if (!musicPlaying) {
                 startMusic();
