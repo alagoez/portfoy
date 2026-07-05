@@ -1,0 +1,426 @@
+/* ============================================================
+   PROJECTS — Sliding Card Carousel + Detail Modal
+   ============================================================ */
+.proj-carousel {
+    position: relative;
+    margin-top: 6px;
+}
+
+.proj-track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 12px 4px 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding: 0 4px;
+}
+
+.proj-track::-webkit-scrollbar {
+    display: none;
+}
+
+.proj-card {
+    flex: 0 0 auto;
+    width: 158px;
+    scroll-snap-align: center;
+    background: var(--secondary-bg);
+    border: 0.5px solid var(--separator);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+    color: inherit;
+    font-family: inherit;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.38);
+    transition: transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.38s ease, border-color 0.3s ease;
+    animation: projCardIn 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.proj-card:hover,
+.proj-card:focus-visible {
+    transform: translateY(-6px) scale(1.025);
+    border-color: rgba(255, 204, 0, 0.55);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.55);
+    outline: none;
+}
+
+.proj-card:active {
+    transform: translateY(-2px) scale(0.99);
+}
+
+.proj-card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #000;
+}
+
+.proj-card-media img,
+.proj-card-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.proj-card:hover .proj-card-media img,
+.proj-card:hover .proj-card-media video {
+    transform: scale(1.06);
+}
+
+.proj-card-info {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 12px 13px;
+}
+
+.proj-card-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    object-fit: contain;
+    background: #000;
+    border: 0.5px solid var(--separator);
+    flex-shrink: 0;
+}
+
+.proj-card-text {
+    min-width: 0;
+    flex: 1;
+}
+
+.proj-card-name {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.proj-card-tag {
+    display: block;
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+}
+
+/* Status badge (shared by card + modal) */
+.proj-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    line-height: 1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    white-space: nowrap;
+}
+
+.proj-card-media .proj-badge {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+}
+
+.proj-badge-aktif {
+    background: rgba(10, 10, 12, 0.55);
+    color: #30D158;
+    border: 0.5px solid rgba(48, 209, 88, 0.5);
+}
+
+.proj-badge-satildi {
+    background: rgba(10, 10, 12, 0.55);
+    color: #FFD60A;
+    border: 0.5px solid rgba(255, 214, 10, 0.5);
+}
+
+.proj-badge .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 6px currentColor;
+    animation: livePulse 1.6s ease-in-out infinite;
+}
+
+.proj-badge i,
+.proj-badge svg {
+    width: 12px;
+    height: 12px;
+}
+
+/* Carousel arrows */
+.proj-arrow {
+    position: absolute;
+    top: 42%;
+    transform: translateY(-50%);
+    z-index: 5;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 0.5px solid var(--separator);
+    background: rgba(44, 44, 46, 0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+    transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+.proj-arrow:hover {
+    transform: translateY(-50%) scale(1.12);
+    background: rgba(58, 58, 60, 0.95);
+}
+
+.proj-arrow:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.proj-arrow-prev {
+    left: -2px;
+}
+
+.proj-arrow-next {
+    right: -2px;
+}
+
+.proj-arrow i,
+.proj-arrow svg {
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.proj-hint {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-style: italic;
+    opacity: 0.65;
+    margin-top: -2px;
+}
+
+/* ---- Detail Modal ---- */
+.proj-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.proj-modal.open {
+    display: flex;
+}
+
+.proj-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.62);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.32s ease;
+}
+
+.proj-modal.open .proj-modal-backdrop {
+    opacity: 1;
+}
+
+.proj-modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    max-height: 88vh;
+    overflow-y: auto;
+    background: var(--secondary-bg);
+    border: 0.5px solid var(--separator);
+    border-radius: 26px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+    transform: scale(0.9) translateY(12px);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.25, 1.15), opacity 0.32s ease;
+    scrollbar-width: none;
+}
+
+.proj-modal-card::-webkit-scrollbar {
+    display: none;
+}
+
+.proj-modal.open .proj-modal-card {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.proj-modal-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #000;
+    border-radius: 26px 26px 0 0;
+}
+
+.proj-modal-media img,
+.proj-modal-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.proj-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 3;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.proj-modal-close i,
+.proj-modal-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+.proj-modal-content {
+    padding: 18px 20px 22px;
+}
+
+.proj-modal-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.proj-modal-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    object-fit: contain;
+    background: #000;
+    border: 0.5px solid var(--separator);
+    flex-shrink: 0;
+}
+
+.proj-modal-titles {
+    flex: 1;
+    min-width: 0;
+}
+
+.proj-modal-titles h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.proj-modal-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+}
+
+.proj-modal-status {
+    flex-shrink: 0;
+}
+
+.proj-modal-desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-primary);
+    opacity: 0.9;
+    margin-bottom: 16px;
+}
+
+.proj-modal-note {
+    display: block;
+    margin-top: 6px;
+    font-style: italic;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+}
+
+.proj-modal-links {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+}
+
+.proj-modal-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.proj-modal-link:hover {
+    text-decoration: underline;
+}
+
+.proj-modal-link i,
+.proj-modal-link svg,
+.proj-modal-link img {
+    width: 16px;
+    height: 16px;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+@keyframes projCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes livePulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
