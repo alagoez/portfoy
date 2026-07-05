@@ -168,6 +168,20 @@ body {
     padding: 20px 16px;
 }
 
+/* Wider layout on larger screens — spread into side gaps */
+@media (min-width: 768px) {
+    .container {
+        max-width: 760px;
+    }
+}
+
+@media (min-width: 1100px) {
+    .container {
+        max-width: 920px;
+        padding: 24px 28px;
+    }
+}
+
 /* Header */
 .main-header {
     margin-bottom: 32px;
