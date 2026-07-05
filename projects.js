@@ -7,14 +7,16 @@
         {
             name: "Alta Lead", tag: "AI SaaS", year: "2026", status: "aktif",
             logo: "alta-lead-logo-white.png",
-            media: { type: "img", src: "alta-lead-preview.png" },
+            thumb: { type: "img", src: "altalead-mobile.png" },
+            media: { type: "img", src: "altalead-desktop.png" },
             desc: "Türkiye'nin yerli AI satış asistanı SaaS'ı. KOBİ web sitelerine entegre olur, 7/24 ziyaretçileri karşılar, sorularını yanıtlar, sıcak müşteri adaylarını yakalayıp anında bildirir. Türkçe, KVKK uyumlu, PayTR ve WhatsApp entegrasyonlu.",
             links: [{ label: "alta-lead.vercel.app", url: "https://alta-lead.vercel.app", type: "web" }]
         },
         {
             name: "suzgec.ai", tag: "AI Startup", year: "2026", status: "aktif",
             logo: "suzgec-logo-new.png",
-            media: { type: "img", src: "suzgec-preview-new.png" },
+            thumb: { type: "img", src: "suzgec-mobile.png" },
+            media: { type: "img", src: "suzgec-desktop.png" },
             desc: "Öğrenciler için Yapay Zeka ile YouTube videolarını, PDF dökümanlarını ve ses dosyalarını özetleyen; çalışma notlarına, sınav sorularına dönüştüren ve çok daha fazlasına sahip bir web sitesi.",
             note: "Çok yakında App Store'da",
             links: [
@@ -25,14 +27,16 @@
         {
             name: "VidKing AI", tag: "AI Video", year: "2026", status: "satildi",
             logo: "vidkingai-logo.png",
-            media: { type: "img", src: "vidkingai-preview.png" },
+            thumb: { type: "img", src: "vidking-mobile.png" },
+            media: { type: "img", src: "vidking-desktop.png" },
             desc: "Viral içerikleri, kendi tarzında yeniden üret. YouTube linkini yapıştır; VidKing AI videonun transkriptini analiz eder, ana fikirleri çıkarır ve senin kanalına özel, orijinal varyasyonlar üretir. Alternatif açılışlar, farklı açılar, taze örnekler — hepsi senin tonunda.",
             links: [{ label: "vidkingai.com", url: "https://vidkingai.com", type: "web" }]
         },
         {
             name: "Walking.art", tag: "Video Content", year: "2026", status: "aktif",
             logo: "walogo2.jpeg",
-            media: { type: "img", src: "wa-icerik.jpeg" },
+            thumb: { type: "img", src: "walking-mobile.png" },
+            media: { type: "img", src: "walking-desktop.png" },
             desc: "Yapay zekâ yardımıyla flört cümleleri üreterek size yardım eden küçük bir web uygulaması.",
             note: "60 dakikada yapıldı",
             links: [{ label: "walking-art.vercel.app", url: "https://walking-art.vercel.app", type: "web" }]
@@ -40,14 +44,16 @@
         {
             name: "NRC.ai", tag: "AI Startup", year: "2026", status: "aktif",
             logo: "nrc.png",
-            media: { type: "img", src: "nrcss.png" },
+            thumb: { type: "img", src: "nrc-mobile.png" },
+            media: { type: "img", src: "nrc-desktop.png" },
             desc: "YouTube içerik üreticileri için yapay zeka ile videoları detaylı analiz eder, stratejik içgörüler oluşturur; etkileşim, duygu analizi ve SEO önerilerini bir rapor halinde hazırlar.",
             links: [{ label: "nrc.ai", url: "https://www.nrcai.com.tr/", type: "web" }]
         },
         {
             name: "D2P", tag: "Giyim Markası", year: "2025", status: "aktif",
             logo: "unnamed (1).jpg",
-            media: { type: "video", src: "3d.mp4" },
+            thumb: { type: "img", src: "d2p-mobile.png" },
+            media: { type: "img", src: "d2p-desktop.png" },
             desc: "Streetwear tasarımlarımızla bizim gibi harekete geçmekten çekinmeyen, milyoner olmak isteyen, risk alan ve sistemi sorgulayanlar için üretilmiştir.",
             links: [
                 { label: "diffpovwear.vercel.app", url: "https://diffpovwear.vercel.app/", type: "web" },
@@ -105,7 +111,7 @@
 
         const mediaWrap = document.createElement("div");
         mediaWrap.className = "proj-card-media";
-        mediaWrap.appendChild(buildMedia(p.media));
+        mediaWrap.appendChild(buildMedia(p.thumb || p.media));
         mediaWrap.appendChild(buildBadge(p.status));
 
         const info = document.createElement("div");
