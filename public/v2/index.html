@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notlar - Fırat & Alperen</title>
+    <meta name="description" content="Fırat & Alperen Notlar - Projeler ve İletişim">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="projects.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JZN791ST54"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-JZN791ST54');
+    </script>
+</head>
+
+<body class="dark-mode">
+    <!-- Sticky Top Bar -->
+    <nav class="top-bar">
+        <div class="top-bar-left" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="cursor: pointer;">
+            <i data-lucide="chevron-left" class="back-icon"></i>
+            <span>2girişimci.pdf 📁</span>
+        </div>
+        <div class="top-bar-center">
+            <span class="nav-title">Fırat & Alperen</span>
+        </div>
+        <div class="top-bar-right">
+            <div id="share-trigger" style="display: flex; align-items: center; cursor: pointer;">
+                <i data-lucide="share" class="nav-icon" style="color: #FFD60A;"></i>
+            </div>
+            <div class="menu-container" id="more-menu-trigger" style="cursor: pointer;">
+                <i data-lucide="more-horizontal" class="nav-icon"></i>
+                <div class="ios-menu" id="nav-menu">
+                    <div class="menu-item" onclick="scrollToSection('highlights-sect')">
+                        <span>Öne Çıkanlar</span>
+                        <i data-lucide="star" class="menu-icon"></i>
+                    </div>
+                    <div class="menu-item" onclick="scrollToSection('info-sect')">
+                        <span>Bilgi</span>
+                        <i data-lucide="info" class="menu-icon"></i>
+                    </div>
+                    <div class="menu-item" onclick="scrollToSection('projects-sect')">
+                        <span>Projelerimiz</span>
+                        <i data-lucide="briefcase" class="menu-icon"></i>
+                    </div>
+                    <div class="menu-item" onclick="scrollToSection('goals-sect')">
+                        <span>Hedeflerimiz</span>
+                        <i data-lucide="target" class="menu-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="header-title-container">
+                <h1 id="dynamic-title" style="margin: 0;">Fırat & Alperen</h1>
+                <div class="spinning-logo-wrapper">
+                    <img src="biz.png" class="spinning-logo" alt="logo">
+                </div>
+            </div>
+            <p class="header-sub"><em>2diffpov:</em> <span class="marker-underline">2 farklı bakış
+                    açısı</span></p>
+        </header>
+
+        <!-- Date and Highlights -->
+        <div class="date-header" id="current-date">Bugün, 03:27</div>
+        <div class="highlights-container" id="highlights-sect">
+            <div class="separator-line"></div>
+            <span class="separator-text"><i>Öne Çıkanlar</i></span>
+        </div>
+
+        <!-- Intro Section (Checklist Style) -->
+        <section class="checklist-intro">
+            <div class="checked-item">
+                <div class="check-circle-filled"><i data-lucide="check"></i></div>
+                <span>Yapay zeka kullanarak projeler oluşturuyoruz 🤖</span>
+            </div>
+            <div class="checked-item">
+                <div class="check-circle-filled"><i data-lucide="check"></i></div>
+                <span>Girişimcilik serüvenimizi anlatıyoruz
+                    <a href="https://www.instagram.com/2diffpov/" class="bold-instagram" target="_blank"
+                        rel="noopener noreferrer">
+                        Instagram <img src="ig-icon.svg" alt="ig" style="width: 20px; height: 20px; vertical-align: middle;">
+                    </a> /
+                    <a href="https://www.tiktok.com/@2diffpov" class="bold-instagram" target="_blank"
+                        rel="noopener noreferrer">
+                        TikTok <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.89-.6-4.13-1.39a8.16 8.16 0 0 1-2.91-3.26c-.05 2.13-.03 5.48-.03 7.61a7.65 7.65 0 0 1-1.34 4.18c-1.38 1.83-3.6 2.89-5.88 2.87-3.4-.04-6.42-2.5-7.14-5.82a7.65 7.65 0 0 1 2.08-7.23 7.65 7.65 0 0 1 5.92-2.26c.01 1.4-.02 2.79.02 4.19-.8-.11-1.63-.07-2.4.2a3.61 3.61 0 0 0-2.31 3.12c-.17 1.17.15 2.4.92 3.3.77.9 1.95 1.45 3.14 1.44 1.4-.02 2.72-.92 3.25-2.22.25-.61.32-1.28.31-1.95V.02h.01z" />
+                        </svg>
+                    </a>
+                </span>
+            </div>
+            <div class="checked-item">
+                <div class="check-circle-filled"><i data-lucide="check"></i></div>
+                <span>Çalışırken dinlediğimiz playlist
+                    <a href="https://open.spotify.com/playlist/0zzsr0sJRI97Hv83sXOSrX"
+                        class="bold-instagram spotify-link-v2" target="_blank" rel="noopener noreferrer">
+                        <span>Spotify</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg" class="spotify-spin">
+                            <path
+                                d="M12 0C5.373 0 0 5.372 0 12s5.373 12 12 12 12-5.372 12-12S18.627 0 12 0zm5.508 17.302c-.218.358-.684.474-1.037.256-2.822-1.724-6.375-2.112-10.556-1.16-.407.093-.815-.162-.908-.569-.093-.408.161-.815.569-.908 4.582-1.047 8.5-1.597 11.677.348.353.217.469.683.255 1.033zm1.47-3.254c-.274.446-.86.587-1.304.316-3.235-1.986-8.164-2.564-11.987-1.406-.5.152-1.026-.131-1.177-.63-.151-.5.132-1.026.63-1.177 4.363-1.322 9.802-.676 13.522 1.6 0 .445-.14 1.031-.384 1.497zm.126-3.414c-3.877-2.303-10.272-2.515-13.98-1.388-.595.18-1.23-.153-1.41-.747-.181-.595.152-1.23.746-1.411 4.258-1.294 11.315-1.043 15.77 1.603.535.317.71 1.008.393 1.543-.317.535-1.008.71-1.543.394z" />
+                        </svg>
+                    </a>
+                </span>
+            </div>
+            <div class="checked-item">
+                <div class="check-circle-filled"><i data-lucide="check"></i></div>
+                <span>Girişimci topluluğumuza katıl
+                    <a href="https://www.skool.com/diffpov-akademi-8549/about" class="bold-instagram" target="_blank"
+                        rel="noopener noreferrer">
+                        Skool <i data-lucide="graduation-cap"
+                            style="width: 18px; height: 18px; vertical-align: middle;"></i>
+                    </a>
+                </span>
+            </div>
+            <div class="checked-item">
+                <div class="check-circle-filled"><i data-lucide="check"></i></div>
+                <span>Based in Istanbul, Turkey 📍</span>
+            </div>
+        </section>
+
+        <!-- Projects List -->
+        <section class="notes-section">
+            <div class="highlights-container" id="projects-sect">
+                <div class="separator-line"></div>
+                <span class="separator-text"><i>Projelerimiz</i></span>
+            </div>
+                        <div class="proj-carousel">
+                <button class="proj-arrow proj-arrow-prev" type="button" aria-label="Önceki">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <div class="proj-track" id="proj-track"></div>
+                <button class="proj-arrow proj-arrow-next" type="button" aria-label="Sonraki">
+                    <i data-lucide="chevron-right"></i>
+                </button>
+            </div>
+            <p class="proj-hint">Bir projeye dokun → detaylar</p>
+        </section>
+
+        <!-- Info Separator -->
+        <div class="highlights-container" id="info-sect">
+            <div class="separator-line"></div>
+            <span class="separator-text"><i>Bilgi</i></span>
+        </div>
+
+        <!-- Checklist Section -->
+        <section class="notes-section">
+            <h2 class="section-label">HEMEN BİZE ULAŞ</h2>
+
+            <div class="cta-centric-v4">
+                <!-- Combined Texts Top -->
+                <div class="cta-texts-top">
+                    <!-- Text 1 + Arrows -->
+                    <div class="cta-text-wrapper-v4">
+                        <span class="scribble-circle bold-text">İŞLETMEM İÇİN YAPAY ZEKA KULLANMAK İSTİYORUM</span>
+                        <!-- Arrows for Text 1 -->
+                        <svg class="scribble-arrow arrow-cross-1" viewBox="0 0 100 120" preserveAspectRatio="none">
+                            <path d="M90,10 Q50,20 15,95" stroke="#C62828" stroke-width="2.5" fill="none"
+                                stroke-linecap="round" />
+                            <path d="M28,85 L15,98 L5,82" stroke="#C62828" stroke-width="2.5" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <svg class="scribble-arrow arrow-cross-2" viewBox="0 0 100 120" preserveAspectRatio="none">
+                            <path d="M10,10 Q50,20 85,95" stroke="#C62828" stroke-width="2.5" fill="none"
+                                stroke-linecap="round" />
+                            <path d="M72,85 L85,98 L95,82" stroke="#C62828" stroke-width="2.5" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+
+                    <!-- Text 2 + Arrows -->
+                    <div class="cta-text-wrapper-v4">
+                        <span class="scribble-circle bold-text">BİR FİKRİM VAR !!</span>
+                        <!-- Arrows for Text 2 -->
+                        <svg class="scribble-arrow arrow-cross-3" viewBox="0 0 100 120" preserveAspectRatio="none">
+                            <path d="M90,10 Q50,20 15,95" stroke="#C62828" stroke-width="2.5" fill="none"
+                                stroke-linecap="round" />
+                            <path d="M28,85 L15,98 L5,82" stroke="#C62828" stroke-width="2.5" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <svg class="scribble-arrow arrow-cross-4" viewBox="0 0 100 120" preserveAspectRatio="none">
+                            <path d="M10,10 Q50,20 85,95" stroke="#C62828" stroke-width="2.5" fill="none"
+                                stroke-linecap="round" />
+                            <path d="M72,85 L85,98 L95,82" stroke="#C62828" stroke-width="2.5" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Buttons Bottom -->
+                <div class="contact-actions-v4">
+                    <a href="https://ig.me/m/2diffpov" class="action-pill ig-pill" target="_blank"
+                        rel="noopener noreferrer">
+                        <img src="ig-icon.svg" alt="ig" style="width: 20px; height: 20px; vertical-align: middle;">
+                        <span>Instagram DM</span>
+                    </a>
+                    <a href="mailto:diffpov2@outlook.com" class="action-pill mail-pill">
+                        <i data-lucide="mail"></i>
+                        <span>E-posta Gönder</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section class="notes-section">
+            <div class="highlights-container" id="goals-sect">
+                <div class="separator-line"></div>
+                <span class="separator-text"><i>Hedeflerimiz</i></span>
+            </div>
+
+            <div class="chapter-accordion" id="chapter-1">
+                <div class="chapter-header" onclick="document.getElementById('chapter-1').classList.toggle('active')">
+                    <div class="chapter-toggle"></div>
+                    <span class="chapter-title">BÖLÜM 1: ÖĞRENME</span>
+                </div>
+                <div class="chapter-content">
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>Sosyal medyada içerik üretmeyi öğren</span>
+                    </div>
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>Instagram'da 10K takipçi ol</span>
+                    </div>
+                    <div class="chapter-item">
+                        <div class="chapter-check"></div>
+                        <span>YouTube/X hesabı aç ve içerik üret</span>
+                    </div>
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>En az 5 marka ile çalış sosyal medya hesaplarını yönet</span>
+                    </div>
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>Instagram'da 20K takipçi ol</span>
+                    </div>
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>Bizim gibi girişimciler için SKOOL topluluğu oluştur</span>
+                    </div>
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>En az 10 marka ile çalış sosyal medya hesaplarını yönet</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chapter-accordion" id="chapter-2">
+                <div class="chapter-header" onclick="document.getElementById('chapter-2').classList.toggle('active')">
+                    <div class="chapter-toggle"></div>
+                    <span class="chapter-title">BÖLÜM 2: SERÜVENİN BAŞLANGICI</span>
+                </div>
+                <div class="chapter-content">
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>6 ay boyunca yapay zeka üzerine çalış (Vibe Coding/Apps/AI Agent)</span>
+                    </div>
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>Bir proje üzerine çalış ve sat</span>
+                    </div>
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>Şirket kur</span>
+                    </div>
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>Yan proje başlat (giyim markası)</span>
+                    </div>
+                    <div class="chapter-item">
+                        <div class="chapter-check"></div>
+                        <span>2026 yılı sonunda 1.000 adetlik bir satış hacmine ulaş</span>
+                    </div>
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span>Yapay zeka ile kendi SaaS projelerini başlat</span>
+                    </div>
+                    <div class="chapter-item">
+                        <div class="chapter-check"></div>
+                        <span>En az 10 işletmenin kronik iş problemlerini yapay zeka algoritmalarıyla otomatize
+                            et</span>
+                    </div>
+                    <div class="chapter-item">
+                        <div class="chapter-check"></div>
+                        <span>Bir fikir üzerinde çalışmak için üst düzey yatırımcılardan yatırım al</span>
+                    </div>
+                    <div class="chapter-item completed">
+                        <div class="chapter-check checked"><i data-lucide="check"></i></div>
+                        <span class="arr-content">
+                            <span class="arr-amount">₺200K</span>
+                            <span class="arr-label">ARR</span>
+                        </span>
+                    </div>
+                    <div class="chapter-item">
+                        <div class="chapter-check"></div>
+                        <span class="arr-content">
+                            <span class="arr-amount">₺500K</span>
+                            <span class="arr-label">ARR</span>
+                        </span>
+                    </div>
+                    <div class="chapter-item">
+                        <div class="chapter-check"></div>
+                        <span class="arr-content">
+                            <span class="arr-amount">₺1M</span>
+                            <span class="arr-label">ARR</span>
+                        </span>
+                    </div>
+                    <div class="chapter-item">
+                        <div class="chapter-check"></div>
+                        <span class="arr-content">
+                            <span class="arr-amount">₺10M</span>
+                            <span class="arr-label">ARR</span>
+                        </span>
+                    </div>
+                    <div class="chapter-item">
+                        <div class="chapter-check"></div>
+                        <span class="arr-content">
+                            <span class="arr-amount">₺100M</span>
+                            <span class="arr-label">ARR</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Info (Updated with Brand Info) -->
+        <footer class="notes-footer custom-site-footer">
+            <div class="footer-divider-line">
+                <span>© 2025 Fırat & Alperen</span>
+            </div>
+            <div class="footer-sub-links">
+                Ziyaret ettiğiniz için teşekkürler
+            </div>
+        </footer>
+    </main>
+
+    <!-- Project Detail Modal -->
+    <div class="proj-modal" id="proj-modal" aria-hidden="true">
+        <div class="proj-modal-backdrop" data-close></div>
+        <div class="proj-modal-card" role="dialog" aria-modal="true">
+            <button class="proj-modal-close" type="button" data-close aria-label="Kapat"><i data-lucide="x"></i></button>
+            <div class="proj-modal-media" id="pm-media"></div>
+            <div class="proj-modal-content">
+                <div class="proj-modal-head">
+                    <img class="proj-modal-logo" id="pm-logo" alt="">
+                    <div class="proj-modal-titles">
+                        <h3 id="pm-name"></h3>
+                        <div class="proj-modal-sub"><span id="pm-tag"></span> · <span id="pm-year"></span></div>
+                    </div>
+                    <div class="proj-modal-status" id="pm-status"></div>
+                </div>
+                <p class="proj-modal-desc" id="pm-desc"></p>
+                <div class="proj-modal-links" id="pm-links"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Action Bar (iPhone Style) -->
+    <div class="bottom-bar">
+        <div id="list-view-trigger"
+            style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: -10px; cursor: pointer;">
+            <i data-lucide="list" style="pointer-events: none;"></i>
+        </div>
+        <div id="grid-view-trigger"
+            style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: -10px; cursor: pointer;">
+            <i data-lucide="grid" style="pointer-events: none;"></i>
+        </div>
+        <div class="bottom-menu-container" id="bottom-trigger"
+            style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: -10px; position: relative; cursor: pointer;">
+            <i data-lucide="square-pen" class="accent-icon" style="pointer-events: none;"></i>
+            <div class="ios-menu ios-bottom-menu" id="bottom-nav-menu">
+                <div class="menu-grid">
+                    <div class="grid-item">
+                        <i data-lucide="lightbulb"></i>
+                        <span>Bir fikrim var !!</span>
+                    </div>
+                    <div class="grid-item">
+                        <i data-lucide="trending-up"></i>
+                        <span>İşletmemi büyütmek istiyorum</span>
+                    </div>
+                </div>
+                <a href="https://ig.me/m/2diffpov" class="menu-item no-underline" target="_blank"
+                    rel="noopener noreferrer">
+                    <span>Instagram DM</span>
+                    <img src="ig-icon.svg" class="menu-icon" alt="ig" style="width: 20px; height: 20px;">
+                </a>
+                <a href="mailto:diffpov2@outlook.com" class="menu-item no-underline">
+                    <span>E-posta Gönder</span>
+                    <i data-lucide="mail" class="menu-icon"></i>
+                </a>
+                <div class="menu-separator"></div>
+                <a href="https://ig.me/m/2diffpov" class="menu-item start-item-v2 no-underline" target="_blank"
+                    rel="noopener noreferrer">
+                    <span>Hadi Başlayalım</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Toggle Button -->
+    <audio id="bg-music" src="portses.m4a" loop preload="auto" autoplay></audio>
+    <button id="music-toggle" class="music-btn" aria-label="Müzik aç/kapat">
+        <svg id="music-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+        </svg>
+        <svg id="music-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+            <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor" stroke-width="2.5"></line>
+        </svg>
+    </button>
+
+    <script>
+        // Background Music
+        const bgMusic = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-toggle');
+        const iconOn = document.getElementById('music-icon-on');
+        const iconOff = document.getElementById('music-icon-off');
+        let musicPlaying = false;
+
+        function startMusic() {
+            bgMusic.play().then(() => {
+                musicPlaying = true;
+                musicBtn.classList.add('playing');
+                iconOn.style.display = 'block';
+                iconOff.style.display = 'none';
+            }).catch(() => {});
+        }
+
+        // Keep button state in sync with actual playback
+        bgMusic.addEventListener('play', () => {
+            musicPlaying = true;
+            musicBtn.classList.add('playing');
+            iconOn.style.display = 'block';
+            iconOff.style.display = 'none';
+        });
+        bgMusic.addEventListener('pause', () => {
+            musicPlaying = false;
+            musicBtn.classList.remove('playing');
+            iconOn.style.display = 'none';
+            iconOff.style.display = 'block';
+        });
+
+        // Try to start music immediately on page load
+        startMusic();
+
+        // Fallback: start on first user interaction if autoplay was blocked
+        function autoplayOnce() {
+            if (!musicPlaying) {
+                startMusic();
+            }
+            document.removeEventListener('click', autoplayOnce);
+            document.removeEventListener('touchstart', autoplayOnce);
+            document.removeEventListener('scroll', autoplayOnce);
+        }
+        document.addEventListener('click', autoplayOnce);
+        document.addEventListener('touchstart', autoplayOnce);
+        document.addEventListener('scroll', autoplayOnce);
+
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicPlaying = false;
+                musicBtn.classList.remove('playing');
+                iconOn.style.display = 'none';
+                iconOff.style.display = 'block';
+            } else {
+                startMusic();
+            }
+        });
+
+        // Share button functionality
+        document.getElementById('share-trigger').addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const shareData = {
+                title: 'Fırat & Alperen',
+                text: 'Fırat & Alperen Notlar - Projeler ve İletişim',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    console.log('Paylaşım iptal edildi.');
+                }
+            } else {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    showToast('Bağlantı Kopyalandı');
+                } catch (err) {
+                    console.error('Kopyalama başarısız:', err);
+                }
+            }
+        });
+
+        // Top Menu toggle
+        document.getElementById('more-menu-trigger').addEventListener('click', (e) => {
+            const menu = document.getElementById('nav-menu');
+            if (!menu.contains(e.target)) {
+                e.stopPropagation();
+                menu.classList.toggle('show');
+                document.getElementById('bottom-nav-menu').classList.remove('show');
+            }
+        });
+
+        document.getElementById('nav-menu').addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // List View button functionality (Toggle All Goals)
+        document.getElementById('list-view-trigger').addEventListener('click', (e) => {
+            e.stopPropagation();
+            scrollToSection('goals-sect');
+            const allChapters = document.querySelectorAll('.chapter-accordion');
+            const anyClosed = Array.from(allChapters).some(chapter => !chapter.classList.contains('active'));
+            allChapters.forEach(chapter => {
+                if (anyClosed) chapter.classList.add('active');
+                else chapter.classList.remove('active');
+            });
+        });
+
+        // Grid View button functionality (Toggle All)
+        document.getElementById('grid-view-trigger').addEventListener('click', (e) => {
+            e.stopPropagation();
+            scrollToSection('projects-sect');
+            const allProjects = document.querySelectorAll('.project-accordion');
+            const anyClosed = Array.from(allProjects).some(project => !project.classList.contains('active'));
+            allProjects.forEach(project => {
+                if (anyClosed) project.classList.add('active');
+                else project.classList.remove('active');
+            });
+        });
+
+        // Bottom Menu toggle
+        document.getElementById('bottom-trigger').addEventListener('click', (e) => {
+            const menu = document.getElementById('bottom-nav-menu');
+            if (!menu.contains(e.target)) {
+                e.stopPropagation();
+                menu.classList.toggle('show');
+                document.getElementById('nav-menu').classList.remove('show');
+            }
+        });
+
+        document.getElementById('bottom-nav-menu').addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Hide menus when clicking anywhere else
+        document.addEventListener('click', () => {
+            document.getElementById('nav-menu').classList.remove('show');
+            document.getElementById('bottom-nav-menu').classList.remove('show');
+        });
+
+        // Smooth scrolling logic
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                const topOffset = 60;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - topOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+    </script>
+    <script src="script.js"></script>
+    <script src="projects.js"></script>
+</body>
+
+</html>

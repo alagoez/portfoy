@@ -1,0 +1,279 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Anton", "Arial Black", sans-serif;
+  --font-hero: "Instrument Serif", Georgia, serif;
+  --font-hand: "Caveat", cursive;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  /* Vurgu rengi — tek satırdan değiştirilebilir */
+  --color-accent: #dc2626;
+  --color-accent-dark: #991b1b;
+  --color-accent-light: #fef2f2;
+  --color-acid: #f97316;
+  --color-ink: #0a0a0a;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
+body {
+  @apply text-ink antialiased;
+  /* Nokta ızgarası — tüm sayfanın ortak zemini */
+  background-color: #fff;
+  background-image: radial-gradient(circle, rgba(10, 10, 10, 0.055) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* Anton türkçe karakterlerde sıkı dursun */
+.font-display {
+  letter-spacing: 0.015em;
+  font-weight: 400;
+}
+
+/* ── Lenis ──────────────────────────────────────────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* ── Hero giriş animasyonu ──────────────────────────────── */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise 0.7s cubic-bezier(0.21, 0.47, 0.32, 0.98) both; }
+
+/* ── Marquee bantları ───────────────────────────────────── */
+.marquee { overflow: hidden; white-space: nowrap; }
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  animation: marquee var(--marquee-speed, 22s) linear infinite;
+}
+.marquee-reverse .marquee-track { animation-direction: reverse; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ── Flip word (hero) — rolling geçiş ───────────────────── */
+@keyframes word-in {
+  0% { opacity: 0; transform: translateY(115%) rotate(5deg); filter: blur(3px); }
+  100% { opacity: 1; transform: none; filter: none; }
+}
+@keyframes word-out {
+  0% { opacity: 1; transform: translateY(0); filter: none; }
+  100% { opacity: 0; transform: translateY(-115%) rotate(-4deg); filter: blur(3px); }
+}
+.word-enter {
+  display: inline-block;
+  animation: word-in 0.55s cubic-bezier(0.22, 1.2, 0.36, 1) both;
+  will-change: transform, opacity;
+}
+.word-exit {
+  animation: word-out 0.45s cubic-bezier(0.55, 0, 0.7, 0.3) both;
+  will-change: transform, opacity;
+}
+
+/* ── Uiverse tarzı basmalı buton (sert gölge + press) ───── */
+.btn-punch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  overflow: hidden;
+  background: var(--color-ink);
+  color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 6px 0 var(--color-accent);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+  will-change: transform;
+}
+.btn-punch:hover { transform: translateY(3px); box-shadow: 0 3px 0 var(--color-accent); }
+.btn-punch:active { transform: translateY(6px); box-shadow: 0 0 0 var(--color-accent); }
+.btn-punch.btn-invert {
+  background: #fff;
+  color: var(--color-ink);
+  box-shadow: 0 6px 0 var(--color-accent);
+}
+
+/* parlama süpürmesi */
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: shine 3.2s ease infinite;
+  pointer-events: none;
+}
+@keyframes shine {
+  0%, 60% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+
+/* ── Dönen conic bordür (fiyat kartı) ───────────────────── */
+.spin-border {
+  position: relative;
+  border-radius: 1.6rem;
+  padding: 2.5px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.spin-border::before {
+  content: "";
+  position: absolute;
+  inset: -150%;
+  z-index: -1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    var(--color-accent) 60deg,
+    var(--color-acid) 120deg,
+    transparent 180deg,
+    transparent 200deg,
+    var(--color-accent) 300deg,
+    transparent 360deg
+  );
+  animation: spin 5s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin-slow { animation: spin 14s linear infinite; }
+.spin-slower { animation: spin 22s linear infinite; }
+
+/* ── Damga efekti ───────────────────────────────────────── */
+.stamp {
+  font-family: var(--font-display);
+  color: var(--color-accent);
+  border: 3px solid currentColor;
+  border-radius: 0.4rem;
+  padding: 0.1em 0.45em;
+  transform: rotate(-8deg);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0;
+}
+.stamp.stamped { animation: stamp-in 0.4s cubic-bezier(0.25, 1.4, 0.5, 1) both; }
+@keyframes stamp-in {
+  from { opacity: 0; transform: rotate(-8deg) scale(2.6); filter: blur(2px); }
+  to { opacity: 1; transform: rotate(-8deg) scale(1); filter: none; }
+}
+
+/* ── Glitch (hover) ─────────────────────────────────────── */
+.glitch:hover { animation: glitch 0.35s steps(2) infinite; }
+@keyframes glitch {
+  0% { text-shadow: 3px 0 var(--color-accent), -3px 0 #2563eb; transform: translate(1px, -1px); }
+  25% { text-shadow: -3px 0 var(--color-accent), 3px 0 #2563eb; transform: translate(-1px, 1px); }
+  50% { text-shadow: 2px 2px var(--color-accent), -2px -2px #2563eb; transform: translate(1px, 1px); }
+  100% { text-shadow: -2px 0 var(--color-accent), 2px 0 #2563eb; transform: none; }
+}
+
+/* ── Yüzen parallax kartlar ─────────────────────────────── */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  50% { transform: translateY(-14px) rotate(var(--r, 0deg)); }
+}
+.floaty { animation: floaty 5s ease-in-out infinite; }
+
+/* ── FAQ akordeon (yumuşak yükseklik) ───────────────────── */
+.acc-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.acc-body.open { grid-template-rows: 1fr; }
+.acc-inner { overflow: hidden; }
+
+/* ── Scroll progress ────────────────────────────────────── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-acid));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ── Film greni ─────────────────────────────────────────── */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 0.9s steps(4) infinite;
+}
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, 3%); }
+  50% { transform: translate(3%, -2%); }
+  75% { transform: translate(-3%, -3%); }
+}
+
+/* ── Özel imleç ─────────────────────────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 110;
+    pointer-events: none;
+    border-radius: 9999px;
+    mix-blend-mode: difference;
+  }
+  .cursor-dot {
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    background: #fff;
+  }
+  .cursor-ring {
+    width: 36px;
+    height: 36px;
+    margin: -18px 0 0 -18px;
+    border: 1.5px solid #fff;
+    transition: width 0.25s, height 0.25s, margin 0.25s;
+  }
+  .cursor-ring.grow {
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+  }
+}
+@media (hover: none) {
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* ── Yatay proje şeridi (mobil: doğal kaydırma) ─────────── */
+.hscroll-mobile {
+  scrollbar-width: none;
+}
+.hscroll-mobile::-webkit-scrollbar { display: none; }
+
+/* ── Azaltılmış hareket ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .rise, .marquee-track, .floaty, .btn-shine::after,
+  .spin-border::before, .spin-slow, .spin-slower, .grain, .word-enter {
+    animation: none !important;
+  }
+  .word-exit { display: none; }
+}
