@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Music2 } from 'lucide-react'
 import { SKOOL_URL } from './content.js'
 
 export function trackLead() {
@@ -125,6 +125,58 @@ export function SpinText({ text, size = 130, className = '', slow = false, child
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">{children}</div>
     </div>
+  )
+}
+
+// ── Müzik butonu (eski portfolyodaki parça) ────────────────────────
+export function MusicToggle() {
+  const [playing, setPlaying] = useState(false)
+  const audioRef = useRef(null)
+
+  const ensure = () => {
+    if (!audioRef.current) {
+      const a = new Audio('/v2/portses.m4a')
+      a.loop = true
+      a.volume = 0.45
+      audioRef.current = a
+    }
+    return audioRef.current
+  }
+
+  useEffect(() => {
+    // Eski sitedeki gibi autoplay dene; tarayıcı engellerse butonla başlar
+    const a = ensure()
+    a.play().then(() => setPlaying(true)).catch(() => {})
+    return () => a.pause()
+  }, [])
+
+  const toggle = () => {
+    const a = ensure()
+    if (a.paused) {
+      a.play().then(() => setPlaying(true)).catch(() => {})
+    } else {
+      a.pause()
+      setPlaying(false)
+    }
+  }
+
+  return (
+    <button
+      onClick={toggle}
+      aria-label={playing ? 'Müziği durdur' : 'Müziği çal'}
+      title={playing ? 'Müziği durdur' : 'Müziği çal'}
+      className="fixed bottom-20 left-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-neutral-200 bg-white/90 shadow-lg backdrop-blur transition duration-200 hover:scale-110 hover:border-accent/50 sm:bottom-6 sm:left-6"
+    >
+      {playing ? (
+        <span className="spin-fast relative flex h-7 w-7 items-center justify-center rounded-full bg-ink">
+          <span className="absolute left-[3px] top-1/2 h-px w-2 -translate-y-1/2 bg-white/30" />
+          <span className="absolute right-[3px] top-1/2 h-px w-2 -translate-y-1/2 bg-white/30" />
+          <span className="h-2 w-2 rounded-full bg-accent" />
+        </span>
+      ) : (
+        <Music2 className="h-5 w-5 text-ink" />
+      )}
+    </button>
   )
 }
 

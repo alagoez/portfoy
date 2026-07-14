@@ -10,7 +10,7 @@ import {
 } from './content.js'
 import {
   PunchLink, MarqueeBand, FlipWord, SpinText,
-  GrainOverlay, ScrollProgress, Cursor, trackLead,
+  GrainOverlay, ScrollProgress, Cursor, MusicToggle, trackLead,
 } from './ui.jsx'
 import { initMotion } from './anim.js'
 import storyImg from './assets/story.jpg'
@@ -633,6 +633,7 @@ export default function App() {
       </main>
       <Footer />
       <StickyMobileCta />
+      <MusicToggle />
     </>
   )
 }

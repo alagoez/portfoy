@@ -153,6 +153,7 @@ html.lenis body {
 @keyframes spin { to { transform: rotate(360deg); } }
 .spin-slow { animation: spin 14s linear infinite; }
 .spin-slower { animation: spin 22s linear infinite; }
+.spin-fast { animation: spin 2.4s linear infinite; }
 
 /* ── Damga efekti ───────────────────────────────────────── */
 .stamp {
@@ -272,7 +273,7 @@ html.lenis body {
 /* ── Azaltılmış hareket ─────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .rise, .marquee-track, .floaty, .btn-shine::after,
-  .spin-border::before, .spin-slow, .spin-slower, .grain, .word-enter {
+  .spin-border::before, .spin-slow, .spin-slower, .spin-fast, .grain, .word-enter {
     animation: none !important;
   }
   .word-exit { display: none; }
