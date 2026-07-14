@@ -14,6 +14,7 @@ import {
 } from './ui.jsx'
 import { initMotion } from './anim.js'
 import storyImg from './assets/story.jpg'
+import logoImg from './assets/logo.png'
 
 const ICONS = {
   video: Video, library: Library, bot: Bot,
@@ -44,9 +45,7 @@ function TopBar() {
   return (
     <header className="sticky top-0 z-40 border-b border-neutral-100 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-        <span className="font-display text-xl tracking-wide">
-          2DIFF<span className="text-accent">POV</span>
-        </span>
+        <img src={logoImg} alt="2diffpov" className="h-7 w-auto sm:h-8" />
         <a
           href={SKOOL_URL}
           target="_blank"
