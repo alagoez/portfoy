@@ -144,10 +144,25 @@ export function MusicToggle() {
   }
 
   useEffect(() => {
-    // Eski sitedeki gibi autoplay dene; tarayıcı engellerse butonla başlar
+    // Site açılır açılmaz çalmayı dene; tarayıcı engellerse ilk
+    // etkileşimde (tık/dokunma/tuş) otomatik başlat.
     const a = ensure()
-    a.play().then(() => setPlaying(true)).catch(() => {})
-    return () => a.pause()
+    let started = false
+    const start = () => {
+      if (started) return
+      a.play().then(() => {
+        started = true
+        setPlaying(true)
+        events.forEach((e) => window.removeEventListener(e, start))
+      }).catch(() => {})
+    }
+    const events = ['pointerdown', 'touchend', 'keydown']
+    events.forEach((e) => window.addEventListener(e, start))
+    start()
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, start))
+      a.pause()
+    }
   }, [])
 
   const toggle = () => {
@@ -165,16 +180,18 @@ export function MusicToggle() {
       onClick={toggle}
       aria-label={playing ? 'Müziği durdur' : 'Müziği çal'}
       title={playing ? 'Müziği durdur' : 'Müziği çal'}
-      className="fixed bottom-20 left-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-neutral-200 bg-white/90 shadow-lg backdrop-blur transition duration-200 hover:scale-110 hover:border-accent/50 sm:bottom-6 sm:left-6"
+      className="fixed bottom-20 right-4 z-50 flex h-24 w-24 items-center justify-center rounded-full border border-neutral-200 bg-white/90 shadow-xl backdrop-blur transition duration-200 hover:scale-110 hover:border-accent/50 sm:bottom-6 sm:right-6"
     >
       {playing ? (
-        <span className="spin-fast relative flex h-7 w-7 items-center justify-center rounded-full bg-ink">
-          <span className="absolute left-[3px] top-1/2 h-px w-2 -translate-y-1/2 bg-white/30" />
-          <span className="absolute right-[3px] top-1/2 h-px w-2 -translate-y-1/2 bg-white/30" />
-          <span className="h-2 w-2 rounded-full bg-accent" />
+        <span className="spin-fast relative flex h-14 w-14 items-center justify-center rounded-full bg-ink">
+          <span className="absolute left-[6px] top-1/2 h-px w-4 -translate-y-1/2 bg-white/30" />
+          <span className="absolute right-[6px] top-1/2 h-px w-4 -translate-y-1/2 bg-white/30" />
+          <span className="absolute top-[6px] left-1/2 w-px h-4 -translate-x-1/2 bg-white/20" />
+          <span className="absolute bottom-[6px] left-1/2 w-px h-4 -translate-x-1/2 bg-white/20" />
+          <span className="h-4 w-4 rounded-full bg-accent" />
         </span>
       ) : (
-        <Music2 className="h-5 w-5 text-ink" />
+        <Music2 className="h-10 w-10 text-ink" />
       )}
     </button>
   )
