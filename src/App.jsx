@@ -572,9 +572,7 @@ function Footer() {
   return (
     <footer className="border-t border-neutral-100 px-5 pb-28 pt-10 sm:pb-10">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-sm text-neutral-400 sm:flex-row">
-        <span className="font-display text-lg tracking-wide text-ink">
-          2DIFF<span className="text-accent">POV</span>
-        </span>
+        <img src={logoImg} alt="2diffpov" className="h-6 w-auto" />
         <p>
           © 2026 — <span className="font-hand text-lg text-neutral-500">Fırat & Alperen</span> · Tüm hakları saklıdır.
         </p>
