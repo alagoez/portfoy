@@ -107,13 +107,14 @@ export const curriculum = [
   },
   {
     pillar: 'Ayak 2 — Yapay Zeka ile Üret & Kazan',
-    desc: 'Fikirden yayındaki ürüne, oradan ilk gelire.',
+    desc: 'Fikirden yayındaki ürüne, oradan ilk müşteriye.',
     modules: [
-      { title: 'AI Araç Seti', desc: 'Claude Code ve temel araçların kurulumu' },
-      { title: 'Fikirden Ürüne', desc: 'Fikir doğrulama ve MVP mantığı' },
-      { title: 'İlk Projen', desc: 'Adım adım bir projeyi yayına alma' },
-      { title: 'Duyur & Sat', desc: 'İçerikle müşteri çekme — iki ayağın köprüsü' },
-      { title: 'Gelir', desc: 'Fiyatlama, ilk satış, tekrar eden gelir' },
+      { title: 'Kurulum & İlk 10 Dakikan', desc: 'Claude Code + n8n kur, ilk çıktını aynı gün al' },
+      { title: 'Claude Code ile Üretim', desc: 'Brief, spec, hata çözme — kod bilmeden yönet' },
+      { title: 'İlk Ürünün: Micro-SaaS', desc: '30 günde fikirden yayındaki ürüne' },
+      { title: 'n8n + Şablon Kasası', desc: 'Hazır sistemleri al, uyarla, çalıştır' },
+      { title: 'Satılabilir AI Sistemleri', desc: 'Chatbot, sesli asistan, lead makinesi, içerik motoru' },
+      { title: 'Müşteri Kazanımı & Satış', desc: 'Niş, soğuk mesaj, demo, teklif — ilk müşterin' },
     ],
   },
 ]
@@ -153,7 +154,10 @@ export const communityFeatures = [
 
 export const pricingChecklist = [
   'Viral İçerik Makinesi — 5 modül',
-  'Yapay Zeka ile Üret & Kazan — 5 modül',
+  'Yapay Zeka ile Üret & Kazan — 8 modül',
+  'Hazır n8n şablon kasası (10+ sistem)',
+  'Sesli asistan & AI chatbot eğitimi',
+  'Soğuk mesaj, teklif ve satış şablonları',
   'Haftalık canlı yayınlar',
   'Hook & döküman kütüphanesi',
   'İçerik üretim botu',
