@@ -1,636 +1,659 @@
-import { useEffect, useState } from 'react'
-import {
-  Video, Library, Bot, Rocket, MessagesSquare, Target,
-  Check, X, ShieldCheck, ArrowRight, Flame, Play,
-} from 'lucide-react'
-import {
-  SKOOL_URL, WHATSAPP_URL, PRICE, FOUNDING_MEMBER_LIMIT, SHOW_VSL,
-  hero, marqueeWords, rules, proofStats, story, projects, loop, whoFor,
-  curriculum, communityFeatures, pricingChecklist, guarantee, faq,
-} from './content.js'
-import {
-  PunchLink, MarqueeBand, FlipWord, SpinText,
-  GrainOverlay, ScrollProgress, Cursor, MusicToggle, trackLead,
-} from './ui.jsx'
-import { initMotion } from './anim.js'
-import storyImg from './assets/story.jpg'
-import logoImg from './assets/logo.png'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { ChevronDown, Menu, X } from 'lucide-react'
 
-const ICONS = {
-  video: Video, library: Library, bot: Bot,
-  rocket: Rocket, messages: MessagesSquare, target: Target,
-}
-const ICON_COLORS = ['text-accent bg-accent-light', 'text-orange-500 bg-orange-50', 'text-violet-500 bg-violet-50', 'text-emerald-500 bg-emerald-50', 'text-sky-500 bg-sky-50', 'text-pink-500 bg-pink-50']
+const VIDEO_URL =
+  'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260803_192301_9231ed6b-c55c-4a48-909c-4ebe11cf2e11.mp4'
+const SKOOL_ABOUT = 'https://www.skool.com/diffpov-akademi-8549/about'
+const SKOOL_HOME = 'https://www.skool.com/diffpov-akademi-8549'
+// Başvurular buraya gider (FormSubmit, ilk gönderimde onay maili ister)
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/diffpov2@outlook.com'
 
-function Section({ id, className = '', children }) {
+const NAV = [
+  { label: 'Nasıl çalışıyor', href: '#nasil' },
+  { label: 'Neye bakıyoruz', href: '#bakis' },
+  { label: 'Topluluk', href: SKOOL_ABOUT, external: true, chevron: true },
+  { label: 'Proje kartı', href: '#kart' },
+]
+
+const PANELS = ['nasil', 'bakis', 'kart']
+
+function Logo({ className = '' }) {
   return (
-    <section id={id} className={`px-5 py-16 sm:py-28 ${className}`}>
-      <div className="mx-auto max-w-5xl">{children}</div>
-    </section>
+    <svg width="24" height="24" viewBox="0 0 256 256" className={className} aria-hidden="true">
+      <path d="M 128 128 C 128 198.692 70.692 256 0 256 C 0 185.308 57.308 128 128 128 Z M 128 128 C 198.692 128 256 185.308 256 256 C 185.308 256 128 198.692 128 128 Z M 0 0 C 70.692 0 128 57.308 128 128 C 57.308 128 0 70.692 0 0 Z M 256 0 C 256 70.692 198.692 128 128 128 C 128 57.308 185.308 0 256 0 Z" />
+    </svg>
   )
 }
 
-function SectionTitle({ kicker, title, center = true }) {
-  return (
-    <div data-reveal className={`mb-10 sm:mb-14 ${center ? 'text-center' : ''}`}>
-      {kicker && <p className="mb-3 font-hand text-2xl text-accent">{kicker}</p>}
-      <h2 className="font-display text-4xl uppercase leading-[1.05] sm:text-6xl">{title}</h2>
-    </div>
-  )
+function linkProps(item) {
+  return item.external ? { href: item.href, target: '_blank', rel: 'noopener' } : { href: item.href }
 }
 
-// ── Bölümler ───────────────────────────────────────────────────────
-
-function TopBar() {
-  return (
-    <header className="sticky top-0 z-40 border-b border-neutral-100 bg-white/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-        <img src={logoImg} alt="2diffpov" className="h-7 w-auto sm:h-8" />
-        <a
-          href={SKOOL_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={trackLead}
-          className="btn-punch rounded-xl px-4 py-2 text-sm font-bold sm:px-5"
-        >
-          Katıl — ${PRICE.current}/ay
-        </a>
-      </div>
-    </header>
-  )
-}
-
-function Hero() {
-  return (
-    <section className="relative overflow-hidden px-5 pb-20 pt-14 sm:pb-28 sm:pt-24">
-      <div className="pointer-events-none absolute left-1/2 top-0 -z-10 h-80 w-[38rem] max-w-full -translate-x-1/2 rounded-full bg-accent/10 blur-3xl" />
-
-      {/* Yüzen kulüp kartları — parallax */}
-      <div data-float className="floaty pointer-events-none absolute left-[4%] top-32 hidden w-44 rotate-[-7deg] rounded-2xl p-4 text-white shadow-xl lg:block" style={{ '--r': '-7deg', background: 'linear-gradient(135deg, #dc2626, #f97316)' }}>
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-wider opacity-80">Kural 01</p>
-        <p className="mt-1 font-display text-lg leading-tight">ÜRETMEKTEN BAHSETME.</p>
-      </div>
-      <div data-float className="floaty pointer-events-none absolute right-[5%] top-40 hidden w-44 rotate-[6deg] rounded-2xl p-4 text-white shadow-xl lg:block" style={{ '--r': '6deg', animationDelay: '-2s', background: 'linear-gradient(135deg, #0891b2, #10b981)' }}>
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-wider opacity-80">Bugünün görevi</p>
-        <p className="mt-1 font-display text-lg leading-tight">1 VİDEO ÇEK 🎥</p>
-      </div>
-      <div data-float className="floaty pointer-events-none absolute bottom-40 right-[12%] hidden w-40 rotate-[-4deg] rounded-2xl p-4 text-white shadow-xl xl:block" style={{ '--r': '-4deg', animationDelay: '-3.5s', background: 'linear-gradient(135deg, #7c3aed, #db2777)' }}>
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-wider opacity-80">Mod: Aksiyon</p>
-        <p className="mt-1 font-display text-lg leading-tight">BAHANE YOK.</p>
-      </div>
-      <div data-float className="floaty pointer-events-none absolute bottom-36 left-[7%] hidden w-44 rotate-[5deg] rounded-2xl p-4 text-white shadow-xl lg:block" style={{ '--r': '5deg', animationDelay: '-1.2s', background: 'linear-gradient(135deg, #2563eb, #06b6d4)' }}>
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-wider opacity-80">İlk 30 gün</p>
-        <p className="mt-1 font-display text-lg leading-tight">PROJEN YAYINDA →</p>
-      </div>
-
-      <div className="mx-auto max-w-5xl text-center">
-        <p className="rise mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white/80 px-4 py-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-500 shadow-sm backdrop-blur sm:text-[11px]">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-          </span>
-          {hero.eyebrow}
-        </p>
-
-        <h1 className="rise mx-auto font-hero leading-[1.02] tracking-tight" style={{ animationDelay: '0.08s' }}>
-          <span className="block text-[clamp(2.5rem,15.5vw,3.75rem)] sm:text-9xl">{hero.titleTop}</span>
-          <span className="block text-[clamp(2.5rem,15.5vw,3.75rem)] italic text-accent sm:text-9xl">
-            <FlipWord words={hero.flipWords} />
-          </span>
-        </h1>
-
-        <p
-          className="rise mx-auto mt-6 max-w-xl text-base leading-relaxed text-neutral-500 sm:text-lg"
-          style={{ animationDelay: '0.16s' }}
-        >
-          {hero.subtitle}
-        </p>
-
-        <div
-          className="rise relative mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
-          style={{ animationDelay: '0.24s' }}
-        >
-          <PunchLink className="w-full sm:w-auto" sub={hero.ctaSub}>{hero.cta}</PunchLink>
-          <a
-            href="#kurallar"
-            className="w-full rounded-2xl border border-neutral-200 px-8 py-4 text-base font-bold text-neutral-600 transition hover:border-neutral-400 hover:text-ink sm:w-auto"
-          >
-            {hero.secondaryCta}
-          </a>
-          <span className="pointer-events-none absolute -right-2 -top-9 hidden rotate-[8deg] font-hand text-2xl text-accent md:block">
-            {hero.annotation} ↴
-          </span>
-        </div>
-
-        <div
-          className="rise mx-auto mt-12 grid max-w-lg grid-cols-3 divide-x divide-neutral-200 rounded-2xl border border-neutral-200 bg-white/90 py-4 shadow-sm backdrop-blur sm:mt-16 sm:py-5"
-          style={{ animationDelay: '0.34s' }}
-        >
-          {proofStats.map((s) => (
-            <div key={s.label} className="px-2">
-              <p className="font-display text-3xl sm:text-4xl">
-                <span data-count={s.value}>{s.value}</span>
-              </p>
-              <p className="mt-1 font-mono text-[9px] font-semibold uppercase tracking-wide text-neutral-400 sm:text-[10px]">
-                {s.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function RedBand() {
-  return (
-    <div className="rotate-[-1.5deg] scale-105 bg-accent py-3 text-white shadow-lg">
-      <MarqueeBand words={marqueeWords} speed="20s" />
-    </div>
-  )
-}
-
-function Rules() {
-  return (
-    <Section id="kurallar" className="relative overflow-hidden pt-20 sm:pt-32">
-      <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-accent/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-accent/5 blur-3xl" />
-      <SectionTitle kicker="önce kurallar" title={rules.title} />
-      <div className="mx-auto max-w-3xl">
-        {rules.items.map((rule, i) => (
-          <div
-            key={rule}
-            data-rule
-            className="flex items-start gap-5 border-b border-neutral-200 py-6 last:border-0 sm:gap-8 sm:py-8"
-          >
-            <span className="mt-1 shrink-0 font-mono text-sm font-bold tabular-nums text-accent sm:text-base">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <p className={`font-display text-2xl uppercase leading-tight sm:text-4xl ${i === 1 ? 'glitch text-accent' : ''}`}>
-              {rule}
-            </p>
-          </div>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-function Vsl() {
-  if (!SHOW_VSL) return null
-  return (
-    <Section className="pt-0">
-      <div data-reveal className="mx-auto aspect-video max-w-3xl overflow-hidden rounded-3xl border border-neutral-200 bg-neutral-950 shadow-2xl">
-        {/* VSL hazır olunca YouTube embed veya <video> buraya */}
-        <div className="flex h-full items-center justify-center gap-2 text-neutral-500">
-          <Play className="h-5 w-5" /> Video yakında
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-function Story() {
-  return (
-    <Section>
-      <div className="grid items-center gap-10 md:grid-cols-2 md:gap-14">
-        <div>
-          <SectionTitle kicker="hikayemiz" title={story.title} center={false} />
-          <div data-reveal className="-mt-4 space-y-4 text-base leading-relaxed text-neutral-600 sm:-mt-8">
-            {story.paragraphs.map((p, i) => (
-              <p key={i} className={i === story.paragraphs.length - 1 ? 'font-bold text-ink' : ''}>
-                {p}
-              </p>
-            ))}
-          </div>
-        </div>
-        {/* Polaroid çerçeve */}
-        <div data-reveal data-delay="0.15" className="relative mx-auto w-full max-w-sm">
-          <div className="rotate-[3deg] rounded-lg bg-white p-3 pb-14 shadow-2xl transition-transform duration-500 hover:rotate-0">
-            <img
-              src={storyImg}
-              alt="Fırat & Alperen — çekim arasında"
-              className="aspect-square w-full rounded-sm object-cover"
-            />
-            <p className="absolute bottom-4 left-0 right-0 text-center font-hand text-2xl text-neutral-600">
-              iki farklı bakış açısı ✌
-            </p>
-          </div>
-          <span className="absolute -left-3 -top-3 h-8 w-16 rotate-[-35deg] bg-accent/20 backdrop-blur-sm" />
-          <span className="absolute -right-3 -top-2 h-8 w-16 rotate-[30deg] bg-accent/20 backdrop-blur-sm" />
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-function Projects() {
-  return (
-    <section data-hscroll className="flex flex-col justify-center overflow-hidden py-16 sm:py-0 md:h-screen">
-      <div className="mx-auto w-full max-w-5xl px-5">
-        <SectionTitle kicker="kanıt — kaydır" title="Bunları biz ürettik" center={false} />
-      </div>
-      <div
-        data-hscroll-track
-        className="hscroll-mobile flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-4 md:snap-none md:overflow-x-visible md:px-[8vw] md:pb-0"
-      >
-        {projects.map((p, i) => (
-          <div
-            key={p.name}
-            className="relative flex h-[380px] w-[78vw] max-w-[400px] shrink-0 snap-center flex-col justify-between overflow-hidden rounded-[2rem] p-7 text-white shadow-xl md:h-[440px] md:w-[420px] md:max-w-none"
-            style={{ background: p.gradient }}
-          >
-            <span className="pointer-events-none absolute -right-4 -top-10 font-display text-[9rem] leading-none text-white/15">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            {p.shot && (
-              <img
-                src={p.shot}
-                alt={`${p.name} ekran görüntüsü`}
-                className="pointer-events-none absolute -bottom-16 -right-5 w-36 rotate-[7deg] rounded-[1.4rem] border-4 border-white/25 shadow-2xl md:w-40"
-              />
-            )}
-            <div className="relative flex items-start justify-between">
-              <span className="rounded-full bg-white/15 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider backdrop-blur">
-                {p.tag}
-              </span>
-              {p.status === 'CANLI' && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 font-mono text-[10px] font-semibold backdrop-blur">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute h-full w-full animate-ping rounded-full bg-emerald-300 opacity-75" />
-                    <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-300" />
-                  </span>
-                  CANLI
-                </span>
-              )}
-            </div>
-            <div className="relative max-w-[65%]">
-              {p.status === 'SATILDI' && (
-                <span className="stamp mb-4 inline-block bg-white/90 text-xl">SATILDI</span>
-              )}
-              <p className="font-display text-4xl uppercase leading-none md:text-5xl">{p.name}</p>
-            </div>
-          </div>
-        ))}
-        {/* Kapanış kartı */}
-        <div className="relative flex h-[380px] w-[78vw] max-w-[400px] shrink-0 snap-center flex-col items-center justify-center gap-5 rounded-[2rem] border-2 border-dashed border-neutral-300 p-7 text-center md:h-[440px] md:w-[420px] md:max-w-none">
-          <p className="font-display text-3xl uppercase leading-tight text-neutral-400 md:text-4xl">
-            Sıradaki proje<br />
-            <span className="text-ink">seninki.</span>
-          </p>
-          <PunchLink>Kulübe Katıl</PunchLink>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function Loop() {
-  return (
-    <Section id="sistem" className="relative overflow-hidden">
-      <div className="pointer-events-none absolute left-1/2 top-0 h-64 w-96 -translate-x-1/2 rounded-full bg-accent/5 blur-3xl" />
-      <div className="absolute right-6 top-6 hidden text-neutral-300 sm:block">
-        <SpinText text="ÜRET • PAYLAŞ • SAT • TEKRARLA • " size={110}>
-          <Flame className="h-6 w-6 text-accent" />
-        </SpinText>
-      </div>
-      <SectionTitle kicker="sistem" title={loop.title} />
-      <div className="grid gap-3 sm:gap-4 md:grid-cols-4">
-        {loop.steps.map((s, i) => (
-          <div key={s.n} data-reveal data-delay={i * 0.08} className="group relative">
-            <div className="h-full rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition duration-300 group-hover:-translate-y-1.5 group-hover:border-accent/50 group-hover:shadow-lg sm:p-6">
-              <p className="font-mono text-sm font-bold text-accent">{s.n}</p>
-              <p className="mt-3 font-display text-2xl uppercase">{s.title}</p>
-              <p className="mt-2 text-sm leading-relaxed text-neutral-500">{s.desc}</p>
-            </div>
-            {i < loop.steps.length - 1 && (
-              <span className="absolute -right-4 top-1/2 hidden -translate-y-1/2 text-neutral-300 md:block">→</span>
-            )}
-          </div>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-function WhoFor() {
-  return (
-    <Section>
-      <SectionTitle kicker="dürüst olalım" title="Herkes için değil" />
-      <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
-        <div data-reveal className="h-full rounded-3xl border border-emerald-100 bg-emerald-50/50 p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-8">
-          <p className="mb-5 font-display text-2xl uppercase text-emerald-700">Tam sana göre:</p>
-          <ul className="space-y-3.5">
-            {whoFor.yes.map((t) => (
-              <li key={t} className="flex gap-3 text-[15px] font-medium text-neutral-700">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" /> {t}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div data-reveal data-delay="0.12" className="h-full rounded-3xl border border-neutral-200 bg-neutral-50 p-6 transition duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-8">
-          <p className="mb-5 font-display text-2xl uppercase text-neutral-400">Sana göre değil:</p>
-          <ul className="space-y-3.5">
-            {whoFor.no.map((t) => (
-              <li key={t} className="flex gap-3 text-[15px] font-medium text-neutral-500">
-                <X className="mt-0.5 h-4 w-4 shrink-0 text-neutral-400" /> {t}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-const PILLAR_BARS = ['linear-gradient(90deg, #dc2626, #f97316)', 'linear-gradient(90deg, #7c3aed, #2563eb)']
-
-function Curriculum() {
-  return (
-    <Section>
-      <SectionTitle kicker="içerik" title="İki ayak, tek hedef" />
-      <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
-        {curriculum.map((pillar, pi) => (
-          <div key={pillar.pillar} data-reveal data-delay={pi * 0.12} className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-sm">
-            <div className="h-1.5" style={{ background: PILLAR_BARS[pi] }} />
-            <div className="p-6 sm:p-8">
-              <p className="font-mono text-[11px] font-bold uppercase tracking-[0.15em] text-accent">
-                {pillar.pillar}
-              </p>
-              <p className="mt-2 text-sm text-neutral-500">{pillar.desc}</p>
-              <div className="mt-6 space-y-1">
-                {pillar.modules.map((m, mi) => (
-                  <div key={m.title} className="group flex gap-4 rounded-xl p-2.5 transition duration-200 hover:translate-x-1.5 hover:bg-neutral-50">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-neutral-100 font-mono text-[11px] font-bold text-neutral-500 transition group-hover:bg-accent group-hover:text-white">
-                      {pi + 1}.{mi + 1}
-                    </span>
-                    <div>
-                      <p className="font-bold leading-tight">{m.title}</p>
-                      <p className="mt-0.5 text-sm text-neutral-500">{m.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </Section>
-  )
-}
-
-// 21st.dev (kokonutd/bento-grid) deseninden uyarlandı
-function Community() {
-  return (
-    <Section>
-      <SectionTitle kicker="kulüpte neler var" title="İçerisi dolu" />
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-        {communityFeatures.map((f, i) => {
-          const Icon = ICONS[f.icon] ?? Flame
-          return (
-            <div
-              key={f.title}
-              data-reveal
-              data-delay={i * 0.05}
-              className={f.colSpan === 2 ? 'md:col-span-2' : 'col-span-1'}
-            >
-              <div
-                className={`group relative h-full overflow-hidden rounded-xl border border-neutral-200/80 bg-white p-4 transition-all duration-300 will-change-transform hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] sm:p-5 ${
-                  f.featured ? '-translate-y-0.5 shadow-[0_2px_12px_rgba(0,0,0,0.06)]' : ''
-                }`}
-              >
-                <div
-                  className={`absolute inset-0 transition-opacity duration-300 ${
-                    f.featured ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                  }`}
-                  style={{
-                    backgroundImage: 'radial-gradient(circle at center, rgba(0,0,0,0.02) 1px, transparent 1px)',
-                    backgroundSize: '4px 4px',
-                  }}
-                />
-                <div className="relative flex h-full flex-col space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className={`flex h-9 w-9 items-center justify-center rounded-lg transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-110 ${ICON_COLORS[i % ICON_COLORS.length]}`}>
-                      <Icon className="h-4 w-4" />
-                    </div>
-                    <span className="rounded-lg bg-black/5 px-2 py-1 font-mono text-[9px] font-bold tracking-wide text-neutral-600 transition-colors group-hover:bg-black/10">
-                      {f.status}
-                    </span>
-                  </div>
-                  <div className="space-y-1.5">
-                    <h3 className="text-[15px] font-bold tracking-tight text-neutral-900">
-                      {f.title}
-                      <span className="ml-2 font-hand text-lg font-normal text-neutral-400">{f.meta}</span>
-                    </h3>
-                    <p className="text-sm leading-snug text-neutral-600">{f.desc}</p>
-                  </div>
-                  <div className="mt-auto flex items-center gap-2 pt-1 text-xs text-neutral-500">
-                    {f.tags?.map((tag) => (
-                      <span key={tag} className="rounded-md bg-black/5 px-2 py-1 font-mono text-[10px] transition-colors group-hover:bg-black/10">
-                        #{tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-    </Section>
-  )
-}
-
-function Pricing() {
-  return (
-    <Section id="fiyat" className="relative">
-      <div className="mx-auto max-w-xl">
-        <div data-reveal className="spin-border shadow-2xl">
-          <div className="overflow-hidden rounded-[calc(1.6rem-2.5px)] bg-white">
-            <div className="relative bg-accent px-6 py-4 text-center sm:px-8">
-              <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-white/90 sm:text-xs">
-                Kurucu üye fiyatı — ilk {FOUNDING_MEMBER_LIMIT} üyeye özel
-              </p>
-            </div>
-            <div className="relative px-6 py-8 text-center sm:px-8 sm:py-10">
-              <span className="stamp absolute right-3 top-4 text-xs sm:right-8 sm:top-6 sm:text-base">-%50</span>
-              <div className="flex items-end justify-center gap-3">
-                <span className="pb-2 text-2xl font-bold text-neutral-300 line-through">${PRICE.old}</span>
-                <span className="font-display text-7xl sm:text-8xl">${PRICE.current}</span>
-                <span className="pb-2 text-lg font-semibold text-neutral-400">/ay</span>
-              </div>
-              <p className="mt-3 text-sm font-medium text-neutral-500">
-                İlk {FOUNDING_MEMBER_LIMIT} üyeden sonra fiyat ${PRICE.old}/ay olacak.
-                <br />
-                <span className="font-hand text-xl text-accent">şimdi katıl, fiyatını sonsuza kadar sabitle ✍</span>
-              </p>
-              <ul className="mx-auto mt-8 max-w-sm space-y-3 text-left">
-                {pricingChecklist.map((item) => (
-                  <li key={item} className="flex gap-3 text-[15px] font-medium">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent" /> {item}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-9">
-                <PunchLink className="w-full" sub="Skool üzerinden güvenli ödeme · istediğin an iptal">
-                  Kulübe Katıl
-                </PunchLink>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-function Guarantee() {
-  return (
-    <Section>
-      <div data-reveal className="mx-auto flex max-w-3xl flex-col items-center gap-8 rounded-3xl border-2 border-accent/20 bg-accent-light p-8 text-center sm:p-14">
-        <SpinText text="30 GÜN GARANTİ • PARAN İADE • 30 GÜN GARANTİ • " size={150} className="text-accent" slow>
-          <ShieldCheck className="h-10 w-10 text-accent" />
-        </SpinText>
-        <div>
-          <h2 className="font-display text-3xl uppercase sm:text-5xl">{guarantee.title}</h2>
-          <p className="mx-auto mt-4 max-w-xl text-base font-medium leading-relaxed text-neutral-700 sm:text-lg">
-            {guarantee.text}
-          </p>
-          <p className="mt-4 text-sm text-neutral-500">{guarantee.note}</p>
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-function Faq() {
-  const [open, setOpen] = useState(0)
-  return (
-    <Section>
-      <SectionTitle kicker="sss" title="Aklına takılanlar" />
-      <div className="mx-auto max-w-2xl space-y-3">
-        {faq.map((item, i) => (
-          <div key={item.q} data-reveal data-delay={i * 0.04}>
-            <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white transition hover:border-neutral-300">
-              <button
-                onClick={() => setOpen(open === i ? -1 : i)}
-                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[15px] font-bold sm:px-6 sm:py-5 sm:text-base"
-              >
-                {item.q}
-                <span className={`shrink-0 font-mono text-lg text-accent transition-transform duration-300 ${open === i ? 'rotate-45' : ''}`}>
-                  +
-                </span>
-              </button>
-              <div className={`acc-body ${open === i ? 'open' : ''}`}>
-                <div className="acc-inner">
-                  <p className="px-5 pb-5 text-[15px] leading-relaxed text-neutral-600 sm:px-6">{item.a}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="mt-10 text-center">
-        <p className="font-hand text-2xl text-neutral-500">başka sorun mu var?</p>
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-punch mt-3 rounded-2xl px-6 py-3 font-bold"
-          style={{ boxShadow: '0 6px 0 #059669' }}
-        >
-          WhatsApp'tan yaz →
-        </a>
-      </div>
-    </Section>
-  )
-}
-
-function FinalCta() {
-  return (
-    <Section className="relative overflow-hidden py-24 sm:py-40">
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-3xl" />
-      <div data-zoom className="relative text-center" style={{ transformOrigin: '50% 60%' }}>
-        <h2 className="mx-auto font-display uppercase leading-[0.95]">
-          <span className="block text-5xl sm:text-8xl">Ya üretirsin.</span>
-          <span className="block text-5xl text-accent sm:text-8xl">Ya da paran iade.</span>
-        </h2>
-        <p className="mx-auto mt-6 max-w-md text-base text-neutral-500 sm:text-lg">
-          Karar senin. Biz sistemi kurduk — sıra sende.
-        </p>
-        <div className="mt-10">
-          <PunchLink className="w-full sm:w-auto" sub={`$${PRICE.current}/ay — kurucu üye fiyatı`}>
-            Kulübe Katıl
-          </PunchLink>
-        </div>
-      </div>
-    </Section>
-  )
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-neutral-100 px-5 pb-28 pt-10 sm:pb-10">
-      <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-sm text-neutral-400 sm:flex-row">
-        <img src={logoImg} alt="2diffpov" className="h-6 w-auto" />
-        <p>
-          © 2026 — <span className="font-hand text-lg text-neutral-500">Fırat & Alperen</span> · Tüm hakları saklıdır.
-        </p>
-        <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-ink">
-          İletişim
-        </a>
-      </div>
-    </footer>
-  )
-}
-
-function StickyMobileCta() {
-  return (
-    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-neutral-200 bg-white/95 p-3 backdrop-blur-md sm:hidden">
-      <a
-        href={SKOOL_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={trackLead}
-        className="btn-punch btn-shine w-full rounded-xl py-3.5 font-bold"
-      >
-        Kulübe Katıl — ${PRICE.current}/ay
-        <ArrowRight className="h-4 w-4" />
-      </a>
-    </div>
-  )
+function useHashPanel() {
+  const read = () => {
+    const id = window.location.hash.replace('#', '')
+    return PANELS.includes(id) ? id : null
+  }
+  const [panel, setPanel] = useState(read)
+  useEffect(() => {
+    const onHash = () => setPanel(read())
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+  const close = useCallback(() => {
+    history.replaceState(null, '', window.location.pathname + window.location.search)
+    setPanel(null)
+  }, [])
+  return [panel, close]
 }
 
 export default function App() {
-  useEffect(() => initMotion(), [])
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [panel, closePanel] = useHashPanel()
+  const [prefillEmail, setPrefillEmail] = useState('')
+  const [heroEmail, setHeroEmail] = useState('')
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen || panel ? 'hidden' : ''
+  }, [menuOpen, panel])
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return
+      if (panel) closePanel()
+      else setMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [panel, closePanel])
+
+  useEffect(() => {
+    if (panel) setMenuOpen(false)
+  }, [panel])
+
+  const startCard = (e) => {
+    e.preventDefault()
+    setPrefillEmail(heroEmail.trim())
+    window.location.hash = 'kart'
+  }
+
   return (
-    <>
-      <ScrollProgress />
-      <GrainOverlay />
-      <Cursor />
-      <TopBar />
-      <main>
-        <Hero />
-        <RedBand />
-        <Rules />
-        <Vsl />
-        <Story />
-        <Projects />
-        <div className="border-y border-neutral-200 py-3 text-neutral-400">
-          <MarqueeBand words={marqueeWords} speed="26s" reverse separator="●" />
+    <section className="relative h-screen w-full overflow-hidden">
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        src={VIDEO_URL}
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+
+      <div className="relative z-10 flex h-full flex-col">
+        {/* Nav */}
+        <nav className="flex items-center justify-between px-5 py-5 sm:px-8 sm:py-6 lg:px-12">
+          <a href="#" className="flex items-center gap-2" aria-label="Fight Club">
+            <Logo className="fill-[#010101] lg:fill-white" />
+            <span className="text-lg font-semibold text-[#010101] lg:text-white">fight club</span>
+          </a>
+
+          <div className="hidden items-center gap-3 md:flex">
+            <div className="flex items-center gap-1 rounded-full bg-white/10 px-1.5 py-1.5 backdrop-blur-lg">
+              {NAV.map((item) => (
+                <a
+                  key={item.label}
+                  {...linkProps(item)}
+                  className="flex items-center gap-1 rounded-full px-4 py-1.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  {item.label}
+                  {item.chevron && <ChevronDown className="h-3.5 w-3.5" />}
+                </a>
+              ))}
+            </div>
+            <a
+              href="#kart"
+              className="cta-gradient flex items-center self-stretch rounded-full px-5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            >
+              Kartı gönder
+            </a>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? 'Menüyü kapat' : 'Menüyü aç'}
+            aria-expanded={menuOpen}
+            className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-[#010101] backdrop-blur-lg md:hidden lg:text-white"
+          >
+            <Menu
+              className={`absolute h-5 w-5 transition-all duration-300 ${menuOpen ? 'rotate-90 scale-0 opacity-0' : 'rotate-0 scale-100 opacity-100'}`}
+            />
+            <X
+              className={`absolute h-5 w-5 transition-all duration-300 ${menuOpen ? 'rotate-0 scale-100 opacity-100 text-white' : '-rotate-90 scale-0 opacity-0'}`}
+            />
+          </button>
+        </nav>
+
+        {/* Mobile overlay + drawer */}
+        <div
+          onClick={() => setMenuOpen(false)}
+          className={`fixed inset-0 z-40 bg-black/80 backdrop-blur-md transition-opacity duration-300 md:hidden ${menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+        />
+        <aside
+          className={`fixed right-0 top-0 z-40 flex h-full w-72 flex-col bg-black/90 backdrop-blur-xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${menuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          aria-hidden={!menuOpen}
+        >
+          <div className="flex flex-col gap-2 px-6 pt-24">
+            {NAV.map((item, i) => (
+              <a
+                key={item.label}
+                {...linkProps(item)}
+                tabIndex={menuOpen ? 0 : -1}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  opacity: menuOpen ? 1 : 0,
+                  transform: menuOpen ? 'translateX(0)' : 'translateX(24px)',
+                  transition: 'opacity 400ms ease, transform 400ms cubic-bezier(0.16,1,0.3,1), background-color 150ms, color 150ms',
+                  transitionDelay: menuOpen ? `${(i + 1) * 60}ms` : '0ms',
+                }}
+                className="flex items-center justify-between rounded-xl px-4 py-3.5 text-base font-medium text-white/80 hover:bg-white/10 hover:text-white"
+              >
+                {item.label}
+                {item.chevron && <ChevronDown className="h-4 w-4" />}
+              </a>
+            ))}
+          </div>
+          <div
+            className="mt-auto px-6 pb-10"
+            style={{
+              opacity: menuOpen ? 1 : 0,
+              transform: menuOpen ? 'translateY(0)' : 'translateY(16px)',
+              transition: 'opacity 400ms ease, transform 400ms ease',
+              transitionDelay: menuOpen ? '300ms' : '0ms',
+            }}
+          >
+            <a
+              href="#kart"
+              tabIndex={menuOpen ? 0 : -1}
+              onClick={() => setMenuOpen(false)}
+              className="cta-gradient block w-full rounded-full px-6 py-3 text-center text-sm font-medium text-white transition-opacity hover:opacity-90"
+            >
+              Kartı gönder
+            </a>
+          </div>
+        </aside>
+
+        {/* Bottom-anchored content */}
+        <div className="mt-auto flex flex-col gap-6 px-5 pb-8 sm:gap-8 sm:px-8 sm:pb-12 lg:flex-row lg:items-end lg:justify-between lg:px-12 lg:pb-16">
+          <div className="max-w-xl">
+            <h1 className="text-3xl font-semibold leading-[1.1] tracking-tight text-[#010101] sm:text-4xl lg:text-[3.5rem] lg:text-white">
+              Projeni getir, birlikte inceleyelim
+            </h1>
+
+            <form
+              onSubmit={startCard}
+              className="mt-6 flex flex-col gap-3 sm:mt-8 sm:inline-flex sm:flex-row sm:items-center sm:gap-0 sm:rounded-full sm:bg-white sm:p-1.5"
+            >
+              <input
+                type="email"
+                value={heroEmail}
+                onChange={(e) => setHeroEmail(e.target.value)}
+                placeholder="E-posta adresin"
+                autoComplete="email"
+                aria-label="E-posta adresin"
+                className="rounded-full bg-white px-5 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none sm:w-64 sm:rounded-none sm:bg-transparent sm:px-4 sm:py-2"
+              />
+              <button
+                type="submit"
+                className="cta-gradient cursor-pointer rounded-full px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 sm:py-2.5"
+              >
+                Kartı doldur
+              </button>
+            </form>
+          </div>
+
+          <div className="flex w-full flex-col gap-4 sm:flex-row lg:w-auto lg:gap-5">
+            <div className="flex flex-col justify-between rounded-2xl bg-white/10 p-5 backdrop-blur-lg sm:w-64 sm:p-6">
+              <div
+                className="text-3xl font-normal tracking-tight text-[#010101] sm:text-4xl lg:text-white"
+                style={{ fontFamily: "'Silkscreen', cursive" }}
+              >
+                9$/ay
+              </div>
+              <p className="mt-3 text-sm leading-relaxed text-[#010101]/70 sm:mt-4 lg:text-white/70">
+                Şu anki üyelik. Yapay zekayla fikrini projeye, projeni işe dönüştürenlerin kulübü.
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white/10 p-5 backdrop-blur-lg sm:w-64 sm:p-6">
+              <div className="mb-3 flex items-center gap-2 sm:mb-4">
+                <span className="flex h-6 w-6 items-center justify-center rounded-md bg-black text-xs font-bold text-white">F</span>
+                <span className="text-sm font-semibold text-[#010101] lg:text-white">Proje kartı</span>
+              </div>
+              <p className="text-sm leading-relaxed text-[#010101]/80 lg:text-white/80">
+                Problem ne, kim için, şu an ne var, nerede takıldın. Kartı gönder; projene bakıp sıradaki adımı yazılı olarak dönelim.
+              </p>
+              <div className="mt-4 flex items-center gap-3 sm:mt-5">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black">
+                  <Logo className="h-4 w-4 fill-white" />
+                </span>
+                <div>
+                  <div className="text-sm font-semibold text-[#010101] lg:text-white">5 dakika</div>
+                  <div className="text-xs text-[#010101]/60 lg:text-white/60">Rapor e-postana gelir</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <Loop />
-        <WhoFor />
-        <Curriculum />
-        <Community />
-        <Pricing />
-        <Guarantee />
-        <Faq />
-        <FinalCta />
-      </main>
-      <Footer />
-      <StickyMobileCta />
-      <MusicToggle />
-    </>
+      </div>
+
+      <Panel open={panel === 'nasil'} onClose={closePanel} label="Nasıl çalışıyor">
+        <Eyebrow>Nasıl çalışıyor</Eyebrow>
+        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Üç adım, beş dakika</h2>
+        <List
+          items={[
+            ['Kartı doldur', 'Problem ne, kim için, şu an ne var, nerede takıldın. Beş dakika sürüyor.'],
+            ['Projene bakıyoruz', 'Mantıklı mı, eksikler ne, sıradaki adım ne.'],
+            ['Yazılı rapor', 'Fight Club üyelerine 5 maddelik raporu e-postayla gönderiyoruz. Talep olursa canlı yayında birlikte açıyoruz.'],
+          ]}
+        />
+        <div className="mt-6 flex flex-wrap gap-2">
+          <PrimaryLink href="#kart">Kartı doldur</PrimaryLink>
+          <GhostLink href="#bakis">Neye bakıyoruz</GhostLink>
+        </div>
+      </Panel>
+
+      <Panel open={panel === 'bakis'} onClose={closePanel} label="Neye bakıyoruz">
+        <Eyebrow>İnceleme çerçevesi</Eyebrow>
+        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Her projeye aynı dört soru</h2>
+        <p className="mt-2 text-sm leading-relaxed text-white/60">
+          Raporun bu dört soruya cevap verir. İstersen önce kendin cevapla, sonra raporla karşılaştır.
+        </p>
+        <List
+          items={[
+            ['Problem gerçek mi?', 'Birisi bu sorunu bugün yaşıyor ve çözmek için uğraşıyor mu?'],
+            ['Kim için, net mi?', '"Herkes" değil; tarif edebileceğin tek bir kişi.'],
+            ['Kapsam küçük mü?', 'İlk sürüm bu hafta bitecek kadar dar mı?'],
+            ['Para eden taraf nerede?', 'Kim, neye, neden para öder?'],
+          ]}
+        />
+        <div className="mt-6">
+          <PrimaryLink href="#kart">Kartı doldur</PrimaryLink>
+        </div>
+      </Panel>
+
+      <Panel open={panel === 'kart'} onClose={closePanel} label="Proje kartı">
+        <CardForm open={panel === 'kart'} prefillEmail={prefillEmail} />
+      </Panel>
+    </section>
+  )
+}
+
+/* ---------- panel parçaları ---------- */
+
+function Panel({ open, onClose, label, children }) {
+  const closeRef = useRef(null)
+  useEffect(() => {
+    if (!open) return
+    const t = setTimeout(() => {
+      const first = closeRef.current?.parentElement.querySelector('input:not([type=hidden]):not([tabindex="-1"]), textarea')
+      ;(first || closeRef.current)?.focus({ preventScroll: true })
+    }, 80)
+    return () => clearTimeout(t)
+  }, [open])
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={label}
+      aria-hidden={!open}
+      className={`fixed inset-0 z-[60] flex items-end justify-center p-3 transition-opacity duration-300 sm:items-center sm:p-5 ${open ? 'opacity-100' : 'pointer-events-none invisible opacity-0'}`}
+    >
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={onClose} />
+      <div
+        className={`relative max-h-[calc(100dvh-24px)] w-full max-w-xl overflow-y-auto rounded-2xl bg-white/10 p-6 text-white ring-1 ring-white/10 backdrop-blur-xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:p-8 ${open ? 'translate-y-0' : 'translate-y-4'}`}
+      >
+        <button
+          ref={closeRef}
+          type="button"
+          onClick={onClose}
+          aria-label="Kapat"
+          className="absolute right-4 top-4 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white/80 transition-colors hover:bg-white/20 hover:text-white"
+        >
+          <X className="h-4 w-4" />
+        </button>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+function Eyebrow({ children }) {
+  return <span className="mb-2 block text-xs font-medium text-white/50">{children}</span>
+}
+
+function List({ items }) {
+  return (
+    <ol className="mt-6 flex flex-col gap-2">
+      {items.map(([title, text], i) => (
+        <li key={title} className="flex gap-4 rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
+          <span className="pt-0.5 text-xs text-white/40 tabular-nums">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <div className="text-[15px] font-medium">{title}</div>
+            <p className="mt-1 text-sm leading-relaxed text-white/60">{text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
+function PrimaryLink({ href, children, ...rest }) {
+  return (
+    <a href={href} {...rest} className="inline-flex items-center rounded-full bg-white px-6 py-2.5 text-sm font-medium text-[#010101] transition-opacity hover:opacity-90">
+      {children}
+    </a>
+  )
+}
+
+function GhostLink({ href, children, ...rest }) {
+  return (
+    <a href={href} {...rest} className="inline-flex items-center rounded-full bg-white/10 px-6 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/20 hover:text-white">
+      {children}
+    </a>
+  )
+}
+
+/* ---------- proje kartı formu ---------- */
+
+const STEPS = [
+  { key: 'ad', type: 'text', q: 'Adın ne?', placeholder: 'Adın soyadın', autoComplete: 'name' },
+  { key: 'email', type: 'email', q: 'E-posta adresin', placeholder: 'ornek@mail.com', autoComplete: 'email', hint: 'Raporu buraya göndereceğiz.' },
+  { key: 'proje', type: 'text', q: 'Projenin adı', placeholder: 'Proje adı', hint: 'Ne dersen de, hatırlaman yeter.' },
+  { key: 'problem', type: 'textarea', max: 200, q: 'Problem, tek cümle', placeholder: '[Kim] [şu işi yaparken] [şu sorunu yaşıyor]', hint: 'İki cümle çıkıyorsa henüz problemi bulamamışsın; bu da bir bilgi.' },
+  { key: 'kim', type: 'text', q: 'Kim için?', placeholder: 'Örn. tek başına çalışan bir diş hekimi', hint: '"Herkes" yazma. Tek bir kişi tarif et.' },
+  { key: 'durum', type: 'radio', q: 'Şu an elinde ne var?', options: ['Çalışan bir link', 'Ekran kaydı', 'Henüz yok'], hint: 'Yok demek ayıp değil, ama neye bakacağımızı bilmemiz lazım.' },
+  { key: 'takildim', type: 'textarea', q: 'Nerede takıldın?', placeholder: 'Ne denedim, ne oldu, hata mesajı ne?', hint: 'Net yaz: ne denedin, ne oldu, hata mesajı ne. "Olmuyor" yazma.' },
+  { key: 'istek', type: 'multi', q: 'Bizden ne istiyorsun?', options: ['Problem doğru mu', 'Kapsam çok mu büyük', 'Teknik takıldım', 'Fiyat', 'Müşteri nasıl bulunur'], hint: 'Birden fazla seçebilirsin.' },
+  { key: 'yayin', type: 'radio', q: 'Canlı yayında gösterilebilir mi?', options: ['Evet', 'Hayır'], hint: 'Gizli bilgi, müşteri verisi ya da API anahtarı varsa hayır de.' },
+  { key: 'uye', type: 'radio', q: 'Son olarak: Fight Club üyesi misin?', options: ['Evet, içerideyim', 'Henüz değil'], hint: 'Yazılı raporlar üyelere hazırlanıyor. Üye değilsen kartın yine bize ulaşır; katıldığında raporun hazırlanır.', consent: true },
+]
+
+const EMPTY = { ad: '', email: '', proje: '', problem: '', kim: '', durum: '', link: '', takildim: '', istek: [], yayin: '', uye: '', onay: false, _honey: '' }
+
+const inputCls =
+  'w-full rounded-xl bg-white/10 px-4 py-3 text-base text-white placeholder-white/35 outline-none ring-1 ring-white/10 transition focus:bg-white/15 focus:ring-white/30'
+
+function Chip({ active, onClick, children }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition-colors ${active ? 'bg-white text-[#010101]' : 'bg-white/10 text-white/80 hover:bg-white/20 hover:text-white'}`}
+    >
+      {children}
+    </button>
+  )
+}
+
+function CardForm({ open, prefillEmail }) {
+  const [v, setV] = useState(EMPTY)
+  const [i, setI] = useState(0)
+  const [dir, setDir] = useState(1)
+  const [error, setError] = useState('')
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
+  const fieldRef = useRef(null)
+
+  const step = STEPS[i]
+  const last = i === STEPS.length - 1
+  const needsLink = step.key === 'durum' && v.durum && v.durum !== 'Henüz yok'
+
+  useEffect(() => {
+    if (open && prefillEmail) setV((s) => (s.email ? s : { ...s, email: prefillEmail }))
+  }, [open, prefillEmail])
+
+  useEffect(() => {
+    if (open && !sent) fieldRef.current?.focus({ preventScroll: true })
+  }, [i]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const set = (key, value) => {
+    setError('')
+    setV((s) => ({ ...s, [key]: value }))
+  }
+
+  const validate = () => {
+    const val = v[step.key]
+    if (step.type === 'multi') return val.length ? '' : 'En az birini seç.'
+    if (step.type === 'radio') {
+      if (!val) return 'Bir seçenek seç.'
+      if (step.key === 'durum' && val !== 'Henüz yok' && !/^https?:\/\/\S+\.\S+/.test(v.link.trim()))
+        return 'Linki https:// ile başlayarak yaz.'
+      if (step.consent && !v.onay) return 'Devam etmek için onay kutusunu işaretle.'
+      return ''
+    }
+    if (!val.trim()) return 'Bu alanı boş bırakma.'
+    if (step.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim())) return 'Geçerli bir e-posta yaz.'
+    return ''
+  }
+
+  const go = (n) => {
+    setDir(n > i ? 1 : -1)
+    setError('')
+    setI(n)
+  }
+
+  const next = (e) => {
+    e?.preventDefault()
+    const err = validate()
+    if (err) return setError(err)
+    if (!last) return go(i + 1)
+    send()
+  }
+
+  const send = async () => {
+    const card = {
+      Ad: v.ad.trim(),
+      'E-posta': v.email.trim(),
+      'Proje adı': v.proje.trim(),
+      'Problem (tek cümle)': v.problem.trim(),
+      'Kim için': v.kim.trim(),
+      'Şu an ne var': v.durum + (v.durum !== 'Henüz yok' && v.link ? ' – ' + v.link.trim() : ''),
+      'Takıldığım yer': v.takildim.trim(),
+      'Bizden ne istiyorum': v.istek.join(', '),
+      'Yayında gösterilebilir mi': v.yayin,
+      'Fight Club üyesi': v.uye,
+      'KVKK onayı': 'Evet',
+      Tarih: new Date().toLocaleString('tr-TR'),
+    }
+    if (v._honey) return setSent(true)
+    setSending(true)
+    try {
+      const r = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ _subject: 'Proje Kartı – ' + card.Ad, _template: 'box', _captcha: 'false', email: card['E-posta'], ...card }),
+      })
+      if (!r.ok) throw new Error(String(r.status))
+      setSent(true)
+    } catch {
+      setError('Gönderilemedi. Bağlantını kontrol edip tekrar dene.')
+    } finally {
+      setSending(false)
+    }
+  }
+
+  const reset = () => {
+    setV(EMPTY)
+    setSent(false)
+    setDir(1)
+    setI(0)
+  }
+
+  const onKeyDown = (e) => {
+    if (e.key !== 'Enter') return
+    if (e.target.tagName === 'TEXTAREA' && !(e.ctrlKey || e.metaKey)) return
+    if (e.target.tagName === 'BUTTON') return
+    next(e)
+  }
+
+  if (sent) {
+    const member = v.uye.startsWith('Evet')
+    return (
+      <div className="anim-pop py-4 text-center">
+        <span className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-white">
+          <Logo className="h-5 w-5 fill-[#010101]" />
+        </span>
+        <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Kartın bize ulaştı</h2>
+        <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-white/60">
+          Projene bakıp dönüşü e-postana yapacağız. Projen ilerledikçe kartı tekrar gönderebilirsin.
+        </p>
+        {!member && (
+          <div className="mt-6 rounded-xl bg-white/5 p-5 ring-1 ring-white/10">
+            <p className="text-sm text-white/80">Yazılı raporlar ve canlı incelemeler Fight Club üyelerine. Şu an ayda 9$.</p>
+            <div className="mt-4">
+              <PrimaryLink href={SKOOL_ABOUT} target="_blank" rel="noopener">Fight Club'a katıl</PrimaryLink>
+            </div>
+          </div>
+        )}
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          {member && <PrimaryLink href={SKOOL_HOME} target="_blank" rel="noopener">Skool'a dön</PrimaryLink>}
+          <button type="button" onClick={reset} className="cursor-pointer rounded-full bg-white/10 px-6 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/20 hover:text-white">
+            Yeni kart gönder
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={next} onKeyDown={onKeyDown} noValidate>
+      <div className="mb-3 flex items-center justify-between pr-12">
+        <span className="text-xs font-medium text-white/50">Proje kartı</span>
+        <span className="text-xs text-white/50 tabular-nums">
+          {String(i + 1).padStart(2, '0')} / {STEPS.length}
+        </span>
+      </div>
+      <div className="mb-7 h-0.5 overflow-hidden rounded-full bg-white/10">
+        <div className="h-full rounded-full bg-white transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" style={{ width: `${((i + 1) / STEPS.length) * 100}%` }} />
+      </div>
+
+      <div className="absolute -left-[9999px]" aria-hidden="true">
+        <input tabIndex={-1} autoComplete="off" value={v._honey} onChange={(e) => set('_honey', e.target.value)} />
+      </div>
+
+      <div key={i} className={dir > 0 ? 'anim-step' : 'anim-step-back'}>
+        <label htmlFor={`f-${step.key}`} className="mb-4 block text-xl font-semibold tracking-tight sm:text-2xl">
+          {step.q}
+        </label>
+
+        {(step.type === 'text' || step.type === 'email') && (
+          <input
+            ref={fieldRef}
+            id={`f-${step.key}`}
+            type={step.type}
+            inputMode={step.type === 'email' ? 'email' : undefined}
+            autoComplete={step.autoComplete}
+            placeholder={step.placeholder}
+            value={v[step.key]}
+            onChange={(e) => set(step.key, e.target.value)}
+            className={inputCls}
+          />
+        )}
+
+        {step.type === 'textarea' && (
+          <>
+            <textarea
+              ref={fieldRef}
+              id={`f-${step.key}`}
+              rows={4}
+              maxLength={step.max}
+              placeholder={step.placeholder}
+              value={v[step.key]}
+              onChange={(e) => set(step.key, e.target.value)}
+              className={`${inputCls} resize-y leading-relaxed`}
+            />
+            {step.max && (
+              <div className="mt-1.5 text-right text-xs text-white/40 tabular-nums">
+                {v[step.key].length} / {step.max}
+              </div>
+            )}
+          </>
+        )}
+
+        {step.type === 'radio' && (
+          <div className="flex flex-wrap gap-2" role="radiogroup">
+            {step.options.map((o) => (
+              <Chip key={o} active={v[step.key] === o} onClick={() => set(step.key, o)}>
+                {o}
+              </Chip>
+            ))}
+          </div>
+        )}
+
+        {step.type === 'multi' && (
+          <div className="flex flex-wrap gap-2" role="group">
+            {step.options.map((o) => (
+              <Chip
+                key={o}
+                active={v.istek.includes(o)}
+                onClick={() => set('istek', v.istek.includes(o) ? v.istek.filter((x) => x !== o) : [...v.istek, o])}
+              >
+                {o}
+              </Chip>
+            ))}
+          </div>
+        )}
+
+        {needsLink && (
+          <input
+            type="url"
+            inputMode="url"
+            autoFocus
+            placeholder={v.durum === 'Ekran kaydı' ? 'Ekran kaydının linki (Loom, Drive, YouTube...)' : 'https://'}
+            value={v.link}
+            onChange={(e) => set('link', e.target.value)}
+            className={`${inputCls} mt-3`}
+          />
+        )}
+
+        {step.hint && <p className="mt-3 text-sm leading-relaxed text-white/50">{step.hint}</p>}
+
+        {step.consent && (
+          <>
+            <label className="mt-5 flex cursor-pointer items-start gap-3 text-sm leading-relaxed text-white/80">
+              <input type="checkbox" checked={v.onay} onChange={(e) => set('onay', e.target.checked)} className="mt-1 h-4 w-4 flex-none accent-white" />
+              <span>Bilgilerimin projemin incelenmesi için saklanmasını ve bana e-posta gönderilmesini kabul ediyorum.</span>
+            </label>
+            <details className="mt-3 text-xs text-white/50">
+              <summary className="cursor-pointer text-white/70">Aydınlatma metni</summary>
+              <p className="mt-2 leading-relaxed">
+                Bu formda verdiğin ad, e-posta ve proje bilgileri yalnızca projeni incelemek ve sana dönüş yapmak için kullanılır, üçüncü kişilerle paylaşılmaz. Bilgilerinin silinmesini istersen diffpov2@outlook.com adresine yazman yeterli.
+              </p>
+            </details>
+          </>
+        )}
+      </div>
+
+      <p role="alert" className="mt-3 min-h-5 text-sm text-red-300">{error}</p>
+
+      <div className="mt-4 flex items-center justify-between gap-2">
+        <button
+          type="button"
+          onClick={() => go(i - 1)}
+          className={`cursor-pointer rounded-full bg-white/10 px-6 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/20 hover:text-white ${i === 0 ? 'invisible' : ''}`}
+        >
+          Geri
+        </button>
+        <button
+          type="submit"
+          disabled={sending}
+          className="cursor-pointer rounded-full bg-white px-6 py-2.5 text-sm font-medium text-[#010101] transition-opacity hover:opacity-90 disabled:cursor-wait disabled:opacity-60"
+        >
+          {sending ? 'Gönderiliyor…' : last ? 'Kartı gönder' : 'Devam'}
+        </button>
+      </div>
+    </form>
   )
 }
