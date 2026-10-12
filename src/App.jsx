@@ -5,6 +5,7 @@ import CardForm from './CardForm.jsx'
 import { FAQ, INSIDE, INSTAGRAM, MAIL, NAV, PROJECTS, QUESTIONS, SKOOL_ABOUT, STATS, STEPS, TIKTOK, VIDEO_URL } from './content.js'
 
 const PANELS = ['kart', 'kvkk']
+const STATUS_LABEL = { canli: 'Yayında', satildi: 'Satıldı', askida: 'Askıya alındı' }
 
 function useHashPanel() {
   const read = () => {
@@ -321,7 +322,7 @@ export default function App() {
         {/* Projeler */}
         <section id="projeler" className="scroll-mt-20 px-5 pb-24 sm:px-8 sm:pb-32 lg:px-12">
           <div className="mx-auto max-w-7xl">
-            <SectionHead eyebrow="Projelerimiz" title="Yaptıklarımız," accent="satılanlar dahil." text="Bir kısmı hâlâ yayında, bir kısmını sattık." />
+            <SectionHead eyebrow="Projelerimiz" title="Yaptıklarımız," accent="satılanlar dahil." text="Bir kısmı yayında, bir kısmını sattık, bazılarını beklemeye aldık." />
             <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {PROJECTS.map((p, i) => {
                 const Card = p.url ? 'a' : 'div'
@@ -342,9 +343,9 @@ export default function App() {
                       <div className="flex flex-1 flex-col p-5">
                         <div className="flex items-center justify-between gap-2">
                           <h3 className="font-semibold tracking-tight">{p.name}</h3>
-                          <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium ${p.status === 'satildi' ? 'bg-white text-[#010101]' : 'bg-white/10 text-white/80'}`}>
+                          <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium ${p.status === 'satildi' ? 'bg-white text-[#010101]' : p.status === 'askida' ? 'bg-white/5 text-white/50 ring-1 ring-white/10' : 'bg-white/10 text-white/80'}`}>
                             {p.status === 'canli' && <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />}
-                            {p.status === 'satildi' ? 'Satıldı' : 'Yayında'}
+                            {STATUS_LABEL[p.status]}
                           </span>
                         </div>
                         <div className="mt-1 text-xs text-white/40">{p.tag}</div>

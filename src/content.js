@@ -48,7 +48,7 @@ export const STATS = [
 
 export const PROJECTS = [
   { name: 'Alta Lead', tag: 'AI SaaS', status: 'canli', shot: altalead, url: 'https://alta-lead.vercel.app', text: 'KOBİ siteleri için Türkçe yapay zeka satış asistanı. Ziyaretçiyi karşılar, soruları yanıtlar, sıcak müşteriyi yakalar.' },
-  { name: 'suzgec.ai', tag: 'AI Startup', status: 'canli', shot: suzgec, url: 'https://www.suzgecai.com/', text: 'YouTube videolarını, PDF\'leri ve ses kayıtlarını çalışma notlarına ve sınav sorularına çeviren öğrenci asistanı.' },
+  { name: 'suzgec.ai', tag: 'AI Startup', status: 'askida', shot: suzgec, text: 'YouTube videolarını, PDF\'leri ve ses kayıtlarını çalışma notlarına ve sınav sorularına çeviren öğrenci asistanı.' },
   { name: 'Alta Sniper', tag: 'AI SaaS', status: 'canli', shot: altasniper, text: 'Müşteri adaylarına ulaşmayı ve takibi ölçekleyen soğuk mesaj aracı.' },
   { name: 'Walking.art', tag: 'Web uygulaması', status: 'canli', shot: walking, url: 'https://walking-art.vercel.app', text: 'Yapay zekayla flört cümleleri üreten küçük bir uygulama. 60 dakikada yapıldı.' },
   { name: 'VidKing AI', tag: 'AI Video', status: 'satildi', shot: vidking, text: 'YouTube videosunu analiz edip kanalına özel, orijinal içerik varyasyonları üreten araç.' },
