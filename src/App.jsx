@@ -322,7 +322,7 @@ export default function App() {
         {/* Projeler */}
         <section id="projeler" className="scroll-mt-20 px-5 pb-24 sm:px-8 sm:pb-32 lg:px-12">
           <div className="mx-auto max-w-7xl">
-            <SectionHead eyebrow="Projelerimiz" title="Yaptıklarımız," accent="satılanlar dahil." text="Bir kısmı yayında, bir kısmını sattık, bazılarını beklemeye aldık." />
+            <SectionHead eyebrow="Projelerimiz" title="Yaptıklarımız," accent="satılanlar dahil." text="Bir kısmı yayında, bir kısmını sattık, birini askıya aldık." />
             <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {PROJECTS.map((p, i) => {
                 const Card = p.url ? 'a' : 'div'
