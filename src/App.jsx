@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
-import { ArrowUpRight, Menu, Plus, X } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Menu, Plus, X } from 'lucide-react'
 import { Eyebrow, GhostLink, Logo, Panel, PrimaryLink, Reveal } from './ui.jsx'
-import CardForm from './CardForm.jsx'
+import CardPage from './CardPage.jsx'
 import { FAQ, INSIDE, INSTAGRAM, MAIL, NAV, PROJECTS, QUESTIONS, SKOOL_ABOUT, STATS, STEPS, TIKTOK, VIDEO_URL } from './content.js'
 
-const PANELS = ['kart', 'kvkk']
+const PANELS = ['kvkk']
+const kartAdresi = () => window.location.pathname === '/kart' || window.location.hash === '#kart'
 const STATUS_LABEL = { canli: 'Yayında', satildi: 'Satıldı', askida: 'Askıya alındı' }
 
 function useHashPanel() {
@@ -25,25 +26,12 @@ function useHashPanel() {
   return [panel, close]
 }
 
-function EmailCta({ value, onChange, onSubmit, dark = false }) {
+function CardButton({ className = '', children = 'Proje kartı oluştur' }) {
   return (
-    <form
-      onSubmit={onSubmit}
-      className="flex flex-col gap-3 sm:inline-flex sm:flex-row sm:items-center sm:gap-0 sm:rounded-full sm:bg-white sm:p-1.5"
-    >
-      <input
-        type="email"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="E-posta adresin"
-        autoComplete="email"
-        aria-label="E-posta adresin"
-        className={`rounded-full bg-white px-5 py-3 text-sm text-gray-900 placeholder-gray-400 outline-none sm:w-64 sm:rounded-none sm:bg-transparent sm:px-4 sm:py-2 ${dark ? 'ring-1 ring-white/10 sm:ring-0' : ''}`}
-      />
-      <button type="submit" className="cta-gradient cursor-pointer rounded-full px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 sm:py-2.5">
-        Kartı doldur
-      </button>
-    </form>
+    <a href="/kart" className={`group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-[15px] font-semibold text-[#010101] shadow-lg shadow-black/25 transition-opacity hover:opacity-90 ${className}`}>
+      {children}
+      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+    </a>
   )
 }
 
@@ -62,41 +50,64 @@ function SectionHead({ eyebrow, title, accent, text }) {
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [panel, closePanel] = useHashPanel()
-  const [prefillEmail, setPrefillEmail] = useState('')
-  const [heroEmail, setHeroEmail] = useState('')
-  const [endEmail, setEndEmail] = useState('')
   const [scrolled, setScrolled] = useState(false)
+  const [pastHero, setPastHero] = useState(false)
+  const [cardOpen, setCardOpen] = useState(kartAdresi)
+
+  // /kart adresi kart ekranını açar; eski #kart linkleri de çalışır
+  const openCard = useCallback(() => {
+    if (window.location.pathname !== '/kart') history.pushState(null, '', '/kart')
+    setCardOpen(true)
+  }, [])
+  const closeCard = useCallback(() => {
+    history.pushState(null, '', '/')
+    setCardOpen(false)
+  }, [])
+  useEffect(() => {
+    const sync = () => setCardOpen(kartAdresi())
+    window.addEventListener('popstate', sync)
+    window.addEventListener('hashchange', sync)
+    // Sayfadaki bütün "/kart" ve "#kart" bağlantıları kart ekranını açar
+    const onClick = (e) => {
+      const href = e.target.closest('a')?.getAttribute('href')
+      if (href === '/kart' || href === '#kart') { e.preventDefault(); openCard() }
+    }
+    document.addEventListener('click', onClick)
+    return () => {
+      window.removeEventListener('popstate', sync)
+      window.removeEventListener('hashchange', sync)
+      document.removeEventListener('click', onClick)
+    }
+  }, [openCard])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40)
+      setPastHero(window.scrollY > window.innerHeight * 0.8)
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen || panel ? 'hidden' : ''
-  }, [menuOpen, panel])
+    document.body.style.overflow = menuOpen || panel || cardOpen ? 'hidden' : ''
+  }, [menuOpen, panel, cardOpen])
 
   useEffect(() => {
     const onKey = (e) => {
       if (e.key !== 'Escape') return
       if (panel) closePanel()
+      else if (cardOpen) closeCard()
       else setMenuOpen(false)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [panel, closePanel])
+  }, [panel, closePanel, cardOpen, closeCard])
 
   useEffect(() => {
-    if (panel) setMenuOpen(false)
-  }, [panel])
-
-  const startCard = (email) => (e) => {
-    e.preventDefault()
-    setPrefillEmail(email.trim())
-    window.location.hash = 'kart'
-  }
+    if (panel || cardOpen) setMenuOpen(false)
+  }, [panel, cardOpen])
 
   // Kaydırınca nav koyulaşır; küçük ekranda video açık renkli olduğu için yazılar o zamana kadar koyu
   const navInk = scrolled ? 'text-white' : 'text-[#010101] lg:text-white'
@@ -120,8 +131,8 @@ export default function App() {
                 </a>
               ))}
             </div>
-            <a href="#kart" className="cta-gradient flex items-center self-stretch rounded-full px-5 text-sm font-medium text-white ring-1 ring-white/10 transition-opacity hover:opacity-90">
-              Kartı gönder
+            <a href="/kart" className="flex items-center gap-1.5 self-stretch rounded-full bg-white px-5 text-sm font-semibold text-[#010101] transition-opacity hover:opacity-90">
+              Proje kartı oluştur <ArrowRight className="h-4 w-4" />
             </a>
           </div>
 
@@ -170,8 +181,8 @@ export default function App() {
           className="mt-auto px-6 pb-10"
           style={{ opacity: menuOpen ? 1 : 0, transform: menuOpen ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 400ms ease, transform 400ms ease', transitionDelay: menuOpen ? '300ms' : '0ms' }}
         >
-          <a href="#kart" tabIndex={menuOpen ? 0 : -1} onClick={() => setMenuOpen(false)} className="block w-full rounded-full bg-white px-6 py-3 text-center text-sm font-medium text-[#010101]">
-            Kartı gönder
+          <a href="/kart" tabIndex={menuOpen ? 0 : -1} onClick={() => setMenuOpen(false)} className="flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#010101]">
+            Proje kartı oluştur <ArrowRight className="h-4 w-4" />
           </a>
         </div>
       </aside>
@@ -188,9 +199,11 @@ export default function App() {
               <p className="mt-4 max-w-md text-sm leading-relaxed text-[#010101]/70 sm:text-base lg:text-white/70">
                 Yapay zekayla fikrini projeye, projeni işe dönüştür. Proje kartını doldur, projene bakalım.
               </p>
-              <div className="mt-6 sm:mt-8">
-                <EmailCta value={heroEmail} onChange={setHeroEmail} onSubmit={startCard(heroEmail)} />
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3 sm:mt-8">
+                <CardButton />
+                <a href="#nasil" className="text-sm font-medium text-[#010101]/75 underline-offset-4 hover:underline lg:text-white/75">Nasıl çalışıyor?</a>
               </div>
+              <p className="mt-4 text-xs text-[#010101]/60 lg:text-white/55">Ücretsiz · yaklaşık 5 dakika · PDF olarak bize ulaşır</p>
             </div>
 
             <div className="flex w-full flex-col gap-4 sm:flex-row lg:w-auto lg:gap-5">
@@ -214,7 +227,7 @@ export default function App() {
                   </span>
                   <div>
                     <div className="text-sm font-semibold text-[#010101] lg:text-white">5 dakika</div>
-                    <div className="text-xs text-[#010101]/60 lg:text-white/60">9 kısa soru</div>
+                    <div className="text-xs text-[#010101]/60 lg:text-white/60">10 kısa alan</div>
                   </div>
                 </div>
               </div>
@@ -392,7 +405,7 @@ export default function App() {
                 </div>
                 <div className="mt-8 flex flex-col gap-2">
                   <PrimaryLink href={SKOOL_ABOUT} target="_blank" rel="noopener" className="py-3">Fight Club'a katıl</PrimaryLink>
-                  <GhostLink href="#kart" className="py-3">Önce kartı gönder</GhostLink>
+                  <GhostLink href="/kart" className="py-3">Önce proje kartı oluştur</GhostLink>
                 </div>
               </div>
             </div>
@@ -423,9 +436,9 @@ export default function App() {
             <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
               Projeni getir, <em className="font-serif font-normal text-white/50">birlikte inceleyelim.</em>
             </h2>
-            <p className="mx-auto mt-5 max-w-md text-white/55">Dokuz kısa soru, beş dakika. Projen hangi aşamada olursa olsun.</p>
+            <p className="mx-auto mt-5 max-w-md text-white/55">On kısa alan, beş dakika. Projen hangi aşamada olursa olsun.</p>
             <div className="mt-8 flex justify-center">
-              <EmailCta value={endEmail} onChange={setEndEmail} onSubmit={startCard(endEmail)} dark />
+              <CardButton className="px-9 py-4 text-base" />
             </div>
           </Reveal>
         </section>
@@ -463,9 +476,12 @@ export default function App() {
         <div className="mx-auto mt-12 max-w-7xl text-xs text-white/35">© {new Date().getFullYear()} Alta AI Teknoloji Ltd. Şti. · 2diffpov · Birinci kural: üreteceksin.</div>
       </footer>
 
-      <Panel open={panel === 'kart'} onClose={closePanel} label="Proje kartı">
-        <CardForm open={panel === 'kart'} prefillEmail={prefillEmail} />
-      </Panel>
+      <CardPage open={cardOpen} onClose={closeCard} />
+
+      {/* Kaydırınca beliren sabit buton */}
+      <div className={`fixed inset-x-4 bottom-4 z-30 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] sm:inset-x-auto sm:bottom-6 sm:right-6 ${pastHero && !cardOpen ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'}`}>
+        <CardButton className="w-full shadow-2xl shadow-black/60 ring-1 ring-black/10 sm:w-auto" />
+      </div>
 
       <Panel open={panel === 'kvkk'} onClose={closePanel} label="Aydınlatma metni" wide>
         <Kvkk />
@@ -494,7 +510,7 @@ function Kvkk() {
       <H>Hakların</H>
       <p>Kanun'un 11. maddesi uyarınca verilerinin işlenip işlenmediğini öğrenme, bilgi talep etme, düzeltilmesini ya da silinmesini isteme ve açık rızanı geri alma hakların var. Taleplerini {MAIL} adresine iletebilirsin.</p>
       <div className="mt-8">
-        <a href="#kart" className="inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-medium text-[#010101]">Forma dön</a>
+        <a href="#" onClick={(e) => { e.preventDefault(); history.back() }} className="inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-medium text-[#010101]">Geri dön</a>
       </div>
     </div>
   )

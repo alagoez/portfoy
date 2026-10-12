@@ -27,7 +27,7 @@ export const NAV = [
 ]
 
 export const STEPS = [
-  { n: '01', title: 'Kartı doldur', text: 'Problem ne, kim için, şu an ne var, nerede takıldın. Dokuz kısa soru, beş dakika.' },
+  { n: '01', title: 'Kartı doldur', text: 'Problem ne, kim için, şu an ne var, nerede takıldın. On kısa alan, beş dakika.' },
   { n: '02', title: 'Kartın bize ulaşır', text: 'Gönderdiğin an numaralanır ve PDF olarak bize ulaşır.' },
   { n: '03', title: 'Projene bakıyoruz', text: 'Mantıklı mı, eksikler ne, sıradaki adım ne. Üyelere yazılı rapor; talep oldukça canlı yayında birlikte.' },
 ]

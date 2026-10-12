@@ -1,5 +1,5 @@
 // Proje kartı alanları: doğrulama ve sıralama tek yerden.
-export const DURUM = ['Çalışan bir link', 'Ekran kaydı', 'Henüz yok']
+export const DURUM = ['Canlı link', 'Ekran kaydı', 'Henüz yok']
 export const ISTEK = ['Problem doğru mu', 'Kapsam çok mu büyük', 'Teknik takıldım', 'Fiyat', 'Müşteri nasıl bulunur']
 export const YAYIN = ['Evet', 'Hayır']
 export const UYE = ['Evet, içerideyim', 'Henüz değil']
