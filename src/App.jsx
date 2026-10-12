@@ -459,7 +459,7 @@ export default function App() {
             </div>
           </div>
         </div>
-        <div className="mx-auto mt-12 max-w-7xl text-xs text-white/35">© {new Date().getFullYear()} 2diffpov · Birinci kural: üreteceksin.</div>
+        <div className="mx-auto mt-12 max-w-7xl text-xs text-white/35">© {new Date().getFullYear()} Alta AI Teknoloji Ltd. Şti. · 2diffpov · Birinci kural: üreteceksin.</div>
       </footer>
 
       <Panel open={panel === 'kart'} onClose={closePanel} label="Proje kartı">
@@ -481,7 +481,7 @@ function Kvkk() {
       <h2 className="pr-10 text-2xl font-semibold tracking-tight text-white">Kişisel verilerin işlenmesine ilişkin aydınlatma metni</h2>
       <p className="mt-4">Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında, proje kartı formu aracılığıyla paylaştığın kişisel verilerin nasıl işlendiğini açıklar.</p>
       <H>Veri sorumlusu</H>
-      <p>2diffpov (Fight Club). İletişim: <a href={`mailto:${MAIL}`} className="text-white underline underline-offset-2">{MAIL}</a></p>
+      <p>Alta AI Teknoloji Ltd. Şti. (2diffpov · Fight Club)<br />MERSİS: 0059142841500001<br />Mecidiyeköy Mah. Selahattin Pınar Aralığı Sok. Hüseyin Özer İş Merkezi No:3 D:8 Şişli / İstanbul<br />E-posta: <a href={`mailto:${MAIL}`} className="text-white underline underline-offset-2">{MAIL}</a></p>
       <H>İşlenen veriler</H>
       <p>Adın, e-posta adresin, projene ilişkin yazdığın bilgiler (problem, hedef kitle, link, takıldığın yer, isteklerin), canlı yayın tercihin ve Fight Club üyelik durumun.</p>
       <H>İşleme amacı ve hukuki sebep</H>
