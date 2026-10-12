@@ -3,11 +3,25 @@
 @theme {
   --font-sans: "Geist", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-pixel: "Silkscreen", cursive;
+  --font-serif: "Instrument Serif", Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 html,
 body {
-  background: #000;
+  background: #050505;
+}
+
+::selection {
+  background: #fff;
+  color: #010101;
+}
+
+summary::-webkit-details-marker {
+  display: none;
 }
 
 body {
