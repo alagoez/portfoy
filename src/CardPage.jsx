@@ -163,7 +163,7 @@ async function yedekGonder(v) {
   const card = {
     Ad: v.ad, 'E-posta': v.email, 'Proje adı': v.proje, 'Problem (tek cümle)': v.problem, 'Kim için': v.kim,
     'Şu an ne var': v.durum + (v.link ? ' – ' + v.link : ''), 'Takıldığım yer': v.takildim,
-    'Bizden ne istiyorum': v.istek.join(', '), 'Yayında gösterilebilir mi': v.yayin, 'Fight Club üyesi': v.uye,
+    'Bizden ne istiyorum': v.istek.join(', '), 'Aylık bütçe': v.butce, 'Sermaye': v.sermaye, 'Yayında gösterilebilir mi': v.yayin, 'Fight Club üyesi': v.uye,
     'KVKK onayı': 'Evet', Tarih: new Date().toLocaleString('tr-TR'),
   }
   const r = await fetch(FORM_FALLBACK, {
