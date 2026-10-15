@@ -27,9 +27,9 @@ export const NAV = [
 ]
 
 export const STEPS = [
-  { n: '01', title: 'Kartı doldur', text: 'Problem ne, kim için, şu an ne var, nerede takıldın. On kısa alan, beş dakika.' },
+  { n: '01', title: 'Kartı doldur', text: 'Problem ne, kim için, nerede takıldın, bütçen ve sermayen ne. Beş dakika.' },
   { n: '02', title: 'Kartın bize ulaşır', text: 'Gönderdiğin an numaralanır ve PDF olarak bize ulaşır.' },
-  { n: '03', title: 'Projene bakıyoruz', text: 'Mantıklı mı, eksikler ne, sıradaki adım ne. Üyelere yazılı rapor; talep oldukça canlı yayında birlikte.' },
+  { n: '03', title: 'İki rapor alırsın', text: 'İş raporu: tutar mı, ne eklenmeli, nasıl pazarlanır. Teknik yol haritası: bütçene uygun araçlar, hafta hafta adımlar. Talep oldukça canlı yayında birlikte.' },
 ]
 
 export const QUESTIONS = [
@@ -60,12 +60,13 @@ export const PROJECTS = [
 export const INSIDE = [
   { title: '3 aylık yol', items: ['1. ay: ilk projeni yayına al', '2. ay: daha fazla proje çıkar', '3. ay: yaptığını satmayı öğren'] },
   { title: 'Cephanelik', items: ['170+ otomasyon şablonu', 'Hazır promptlar', 'Teklif ve sözleşme şablonları', 'Müşteri bulma araçları'] },
-  { title: 'Proje incelemeleri', items: ['Proje kartına yazılı rapor', 'Talep oldukça canlı yayın', 'Takıldığın yerde soracağın bir topluluk'] },
+  { title: 'Proje incelemeleri', items: ['Proje kartına iş raporu + teknik yol haritası', 'Talep oldukça canlı yayın', 'Takıldığın yerde soracağın bir topluluk'] },
 ]
 
 export const FAQ = [
-  { q: 'Proje kartı göndermek ücretli mi?', a: 'Hayır, kartı herkes gönderebilir. Yazılı rapor ve canlı incelemeler Fight Club üyelerine hazırlanıyor.' },
-  { q: 'Kartı gönderdikten sonra ne oluyor?', a: 'Kartın bir başvuru numarası alır ve PDF olarak bize ulaşır. Projene dört soruyla bakarız; dönüşümüz kartta yazdığın e-postaya gelir.' },
+  { q: 'Proje kartı göndermek ücretli mi?', a: 'Hayır, kartı herkes gönderebilir. İş raporu, teknik yol haritası ve canlı incelemeler Fight Club üyelerine hazırlanıyor.' },
+  { q: 'Kartı gönderdikten sonra ne oluyor?', a: 'Kartın bir başvuru numarası alır ve PDF olarak bize ulaşır. Sana iki rapor hazırlarız: tutar mı, nasıl pazarlanır diyen iş raporu ve adım adım teknik yol haritası. İkisi de kartta yazdığın e-postaya gelir.' },
+  { q: 'Bütçemi ve sermayemi neden soruyorsunuz?', a: 'Önerilerimiz sana uysun diye. Ayda 1.000 TL ayırabilen biriyle 250.000 TL sermayesi olan birine aynı araçları ve pazarlama yolunu önermek yanlış olur. Bu bilgi sadece bizde kalır.' },
   { q: 'Kod bilmem gerekiyor mu?', a: 'Hayır. Fikir aşamasındaysan da gönderebilirsin, "henüz yok" demek ayıp değil. Yapay zekaya nasıl iş yaptıracağını Fight Club\'daki derslerde adım adım gösteriyoruz.' },
   { q: 'Fikrim gizli kalır mı?', a: 'Kartın yalnızca bize gelir. Canlı yayında göstermemizi istemiyorsan formda "hayır" de; o kart yayına çıkmaz.' },
   { q: 'Projem ilerledi, tekrar gönderebilir miyim?', a: 'Evet. Kartı güncel haliyle tekrar gönder, yeni bir başvuru numarası alır.' },

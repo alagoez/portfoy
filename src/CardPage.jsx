@@ -5,7 +5,9 @@ import { FORM_FALLBACK, SKOOL_ABOUT, SKOOL_HOME } from './content.js'
 
 const DURUM = ['Canlı link', 'Ekran kaydı', 'Henüz yok']
 const ISTEK = ['Problem doğru mu', 'Kapsam çok mu büyük', 'Teknik takıldım', 'Fiyat', 'Müşteri nasıl bulunur']
-const EMPTY = { ad: '', email: '', proje: '', problem: '', kim: '', durum: '', link: '', takildim: '', istek: [], yayin: '', uye: '', onay: false, _honey: '' }
+const BUTCE = ['1.000 TL altı', '1.000 – 5.000 TL', '5.000 – 20.000 TL', '20.000 TL üstü', 'Henüz belli değil']
+const SERMAYE = ['Yok, sadece emeğim', "50.000 TL'ye kadar", '50.000 – 250.000 TL', '250.000 TL üstü', 'Henüz belli değil']
+const EMPTY = { ad: '', email: '', proje: '', problem: '', kim: '', durum: '', link: '', takildim: '', istek: [], butce: '', sermaye: '', yayin: '', uye: '', onay: false, _honey: '' }
 const TASLAK = 'fc-kart-taslak'
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const LINK_RE = /^https?:\/\/\S+\.\S+/
@@ -26,6 +28,8 @@ function hatalar(v) {
   if (!v.durum) e.durum = 'Birini seç.'
   else if (v.durum !== 'Henüz yok' && !LINK_RE.test(v.link.trim())) e.link = 'Linki https:// ile başlayarak yaz.'
   if (!v.takildim.trim()) e.takildim = 'Nerede takıldığını yaz.'
+  if (!v.butce) e.butce = 'Birini seç.'
+  if (!v.sermaye) e.sermaye = 'Birini seç.'
   if (!v.istek.length) e.istek = 'En az birini seç.'
   if (!v.yayin) e.yayin = 'Birini seç.'
   if (!v.uye) e.uye = 'Birini seç.'
@@ -36,7 +40,7 @@ function hatalar(v) {
 // Tamamlanan alan sayısı (ilerleme çubuğu için)
 const ALANLAR = [
   (v) => v.ad.trim(), (v) => EMAIL_RE.test(v.email.trim()), (v) => v.proje.trim(), (v) => v.problem.trim(), (v) => v.kim.trim(),
-  (v) => v.durum && (v.durum === 'Henüz yok' || LINK_RE.test(v.link.trim())), (v) => v.takildim.trim(), (v) => v.istek.length, (v) => v.yayin, (v) => v.uye,
+  (v) => v.durum && (v.durum === 'Henüz yok' || LINK_RE.test(v.link.trim())), (v) => v.takildim.trim(), (v) => v.butce, (v) => v.sermaye, (v) => v.istek.length, (v) => v.yayin, (v) => v.uye,
 ]
 
 const inputCls = (err) =>
@@ -67,6 +71,19 @@ function Segmented({ id, options, value, onChange, error }) {
           onClick={() => onChange(o)}
           className={`cursor-pointer rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${value === o ? 'bg-white text-[#010101] shadow-sm' : 'text-white/65 hover:bg-white/[0.06] hover:text-white'}`}
         >
+          {o}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function Choice({ id, options, value, onChange, error }) {
+  return (
+    <div id={id} role="radiogroup" tabIndex={-1} className="flex flex-wrap gap-2 outline-none">
+      {options.map((o) => (
+        <button key={o} type="button" role="radio" aria-checked={value === o} onClick={() => onChange(o)}
+          className={`cursor-pointer rounded-full px-4 py-2 text-sm font-medium ring-1 transition-colors ${value === o ? 'bg-white text-[#010101] ring-white' : `bg-white/[0.06] text-white/70 hover:text-white ${error ? 'ring-red-400/60' : 'ring-white/10 hover:ring-white/30'}`}`}>
           {o}
         </button>
       ))}
@@ -118,9 +135,9 @@ function Preview({ v, ref_, done }) {
             <span className="font-semibold">{v.ad || <span className="text-neutral-300">Adın</span>}</span>
             <span className="ml-2 text-neutral-500">{v.email}</span>
           </div>
-          <div className="grid grid-cols-3 gap-2">
-            {[['Elinde', v.durum], ['Yayın izni', v.yayin], ['Üye', v.uye && (v.uye.startsWith('Evet') ? 'Evet' : 'Henüz değil')]].map(([a, b]) => (
-              <div key={a} className="rounded-md bg-neutral-100 px-2.5 py-2 ring-1 ring-neutral-200">
+          <div className="grid grid-cols-6 gap-2">
+            {[['Elinde', v.durum], ['Yayın izni', v.yayin], ['Üye', v.uye && (v.uye.startsWith('Evet') ? 'Evet' : 'Henüz değil')], ['Aylık bütçe', v.butce], ['Sermaye', v.sermaye]].map(([a, b], i) => (
+              <div key={a} className={`rounded-md bg-neutral-100 px-2.5 py-2 ring-1 ring-neutral-200 ${i < 3 ? 'col-span-2' : 'col-span-3'}`}>
                 <div className="text-[9px] text-neutral-500">{a}</div>
                 <div className="truncate text-[11px] font-semibold">{b || '—'}</div>
               </div>
@@ -270,9 +287,9 @@ export default function CardPage({ open, onClose }) {
             {!sent && (
               <div className="hidden items-center gap-3 sm:flex">
                 <div className="h-1 w-32 overflow-hidden rounded-full bg-white/10">
-                  <div className="h-full rounded-full bg-white transition-[width] duration-500" style={{ width: `${doneCount * 10}%` }} />
+                  <div className="h-full rounded-full bg-white transition-[width] duration-500" style={{ width: `${(doneCount / ALANLAR.length) * 100}%` }} />
                 </div>
-                <span className="text-xs text-white/50 tabular-nums">{doneCount}/10</span>
+                <span className="text-xs text-white/50 tabular-nums">{doneCount}/{ALANLAR.length}</span>
               </div>
             )}
             <button type="button" onClick={onClose} className="flex cursor-pointer items-center gap-1.5 rounded-full bg-white/10 px-3.5 py-1.5 text-sm text-white/80 transition-colors hover:bg-white/20 hover:text-white">
@@ -293,11 +310,11 @@ export default function CardPage({ open, onClose }) {
               </div>
             )}
             <p className="mt-5 max-w-lg text-base leading-relaxed text-white/60">
-              <b className="font-medium text-white">{v.proje}</b> için gönderdiğin kartı aldık. Projene dört soruyla bakacağız; dönüşümüz <b className="font-medium text-white">{v.email}</b> adresine gelecek.
+              <b className="font-medium text-white">{v.proje}</b> için gönderdiğin kartı aldık. Sana iki rapor hazırlayacağız: iş raporu ve teknik yol haritası. Dönüşümüz <b className="font-medium text-white">{v.email}</b> adresine gelecek.
             </p>
 
             <ol className="mt-10 max-w-lg space-y-0">
-              {[['Kartın ulaştı', 'PDF olarak masamızda.', true], ['Projene bakıyoruz', 'Problem, hedef kişi, kapsam ve para eden taraf.', false], ['Dönüş', 'Değerlendirmemiz e-postana gelir.', false]].map(([t, d, ok], i, a) => (
+              {[['Kartın ulaştı', 'PDF olarak masamızda.', true], ['İş raporu', 'Tutar mı, ne eklenmeli, nasıl pazarlanır, fiyat.', false], ['Teknik yol haritası', 'Bütçene uygun araçlar, hafta hafta adımlar.', false]].map(([t, d, ok], i, a) => (
                 <li key={t} className="relative flex gap-4 pb-7">
                   {i < a.length - 1 && <span className="absolute left-[11px] top-7 h-[calc(100%-20px)] w-px bg-white/15" />}
                   <span className={`relative mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full text-xs ${ok ? 'bg-white text-[#010101]' : 'bg-white/10 text-white/60 ring-1 ring-white/15'}`}>{ok ? <Check className="h-3.5 w-3.5" /> : i + 1}</span>
@@ -308,8 +325,8 @@ export default function CardPage({ open, onClose }) {
 
             {!uye && (
               <div className="mt-2 max-w-lg rounded-2xl bg-white/[0.05] p-6 ring-1 ring-white/10">
-                <div className="font-medium">Yazılı rapor ve canlı inceleme Fight Club üyelerine.</div>
-                <p className="mt-1 text-sm text-white/55">Şu an ayda 9$, istediğin an iptal edebilirsin. Katıldığında raporun hazırlanır.</p>
+                <div className="font-medium">İş raporu, teknik yol haritası ve canlı inceleme Fight Club üyelerine.</div>
+                <p className="mt-1 text-sm text-white/55">Şu an ayda 9$, istediğin an iptal edebilirsin. Katıldığında raporların hazırlanır.</p>
                 <PrimaryLink href={SKOOL_ABOUT} target="_blank" rel="noopener" className="mt-4">Fight Club'a katıl <ArrowRight className="ml-1.5 h-4 w-4" /></PrimaryLink>
               </div>
             )}
@@ -326,7 +343,7 @@ export default function CardPage({ open, onClose }) {
               Projeni anlat, <em className="font-serif font-normal text-white/50">birlikte inceleyelim.</em>
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/55">
-              On kısa alan, yaklaşık beş dakika. Kartın numaralanıp PDF olarak bize ulaşır; projene dört soruyla bakarız. Yazdıkların bu cihazda taslak olarak saklanır.
+              Beş dakika. Kartın numaralanıp PDF olarak bize ulaşır; sana iki rapor hazırlarız: tutar mı, nasıl pazarlanır diyen bir iş raporu ve adım adım teknik yol haritası. Yazdıkların bu cihazda taslak olarak saklanır.
             </p>
 
             <div className="absolute -left-[9999px]" aria-hidden="true">
@@ -373,7 +390,16 @@ export default function CardPage({ open, onClose }) {
                 </Field>
               </Section>
 
-              <Section n="04" title="Beklenti" text="Bizden ne istediğini ve kartın nasıl kullanılabileceğini seç.">
+              <Section n="04" title="Kaynak" text="Önerilerimizi bütçene göre yapalım: araç, sunucu ve pazarlama buna göre seçilir.">
+                <Field id="k-butce" label="Bu projeye ayda ne kadar ayırabilirsin?" hint="Araç, sunucu, reklam gibi aylık giderler için." error={err.butce}>
+                  <Choice id="k-butce" options={BUTCE} value={v.butce} onChange={(o) => set('butce', o)} error={err.butce} />
+                </Field>
+                <Field id="k-sermaye" label="Toplam sermayen ne kadar?" hint="Projeye bir kerede koyabileceğin para. Yoksa sorun değil; yolu ona göre çizeriz." error={err.sermaye}>
+                  <Choice id="k-sermaye" options={SERMAYE} value={v.sermaye} onChange={(o) => set('sermaye', o)} error={err.sermaye} />
+                </Field>
+              </Section>
+
+              <Section n="05" title="Beklenti" text="Bizden ne istediğini ve kartın nasıl kullanılabileceğini seç.">
                 <Field id="k-istek" label="Bizden ne istiyorsun?" hint="Birden fazla seçebilirsin." error={err.istek}>
                   <div id="k-istek" tabIndex={-1} className="flex flex-wrap gap-2 outline-none">
                     {ISTEK.map((o) => {
@@ -391,7 +417,7 @@ export default function CardPage({ open, onClose }) {
                   <Field id="k-yayin" label="Canlı yayında gösterilebilir mi?" hint="Gizli bilgi, müşteri verisi ya da API anahtarı varsa hayır de." error={err.yayin}>
                     <Segmented id="k-yayin" options={['Evet', 'Hayır']} value={v.yayin} onChange={(o) => set('yayin', o)} error={err.yayin} />
                   </Field>
-                  <Field id="k-uye" label="Fight Club üyesi misin?" hint="Yazılı raporlar üyelere hazırlanıyor." error={err.uye}>
+                  <Field id="k-uye" label="Fight Club üyesi misin?" hint="İki rapor (iş raporu + teknik yol haritası) üyelere hazırlanıyor." error={err.uye}>
                     <Segmented id="k-uye" options={['Evet, içerideyim', 'Henüz değil']} value={v.uye} onChange={(o) => set('uye', o)} error={err.uye} />
                   </Field>
                 </div>

@@ -3,6 +3,8 @@ export const DURUM = ['Canlı link', 'Ekran kaydı', 'Henüz yok']
 export const ISTEK = ['Problem doğru mu', 'Kapsam çok mu büyük', 'Teknik takıldım', 'Fiyat', 'Müşteri nasıl bulunur']
 export const YAYIN = ['Evet', 'Hayır']
 export const UYE = ['Evet, içerideyim', 'Henüz değil']
+export const BUTCE = ['1.000 TL altı', '1.000 – 5.000 TL', '5.000 – 20.000 TL', '20.000 TL üstü', 'Henüz belli değil']
+export const SERMAYE = ['Yok, sadece emeğim', "50.000 TL'ye kadar", '50.000 – 250.000 TL', '250.000 TL üstü', 'Henüz belli değil']
 
 const str = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '')
 
@@ -21,10 +23,13 @@ export function dogrula(body) {
     istek: Array.isArray(body.istek) ? body.istek.filter((x) => ISTEK.includes(x)) : [],
     yayin: str(body.yayin, 10),
     uye: str(body.uye, 30),
+    butce: str(body.butce, 40),
+    sermaye: str(body.sermaye, 40),
   }
   if (!k.ad || !k.proje || !k.problem || !k.kim || !k.takildim) return { error: 'Zorunlu alanlardan biri boş.' }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(k.email)) return { error: 'E-posta adresi geçersiz.' }
   if (!DURUM.includes(k.durum) || !YAYIN.includes(k.yayin) || !UYE.includes(k.uye)) return { error: 'Seçimlerden biri geçersiz.' }
+  if (!BUTCE.includes(k.butce) || !SERMAYE.includes(k.sermaye)) return { error: 'Bütçe ve sermaye seçilmeli.' }
   if (k.durum !== 'Henüz yok' && !/^https?:\/\/\S+\.\S+/.test(k.link)) return { error: 'Link https:// ile başlamalı.' }
   if (k.durum === 'Henüz yok') k.link = ''
   if (!k.istek.length) return { error: 'En az bir istek seçilmeli.' }

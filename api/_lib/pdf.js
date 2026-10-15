@@ -84,15 +84,19 @@ export async function kartPdf(k, { ref, tarih, ic = false }) {
   y -= 26
 
   // Özet çipleri
-  const cipler = [['Elinde', k.durum], ['Canlı yayın izni', k.yayin], ['Fight Club üyesi', k.uye]]
-  const cw = (W - 2 * M - 16) / 3
-  cipler.forEach(([l, v], i) => {
-    const x = M + i * (cw + 8)
-    page.drawRectangle({ x, y: y - 40, width: cw, height: 46, color: SOFT, borderColor: LINE, borderWidth: 0.6 })
-    page.drawText(l, { x: x + 12, y: y - 12, size: 8, font: reg, color: GRAY })
-    page.drawText(sar(v, semi, 11, cw - 24)[0], { x: x + 12, y: y - 30, size: 11, font: semi, color: INK })
-  })
-  y -= 70
+  const cipSatiri = (cipler) => {
+    const cw = (W - 2 * M - 8 * (cipler.length - 1)) / cipler.length
+    cipler.forEach(([l, v], i) => {
+      const x = M + i * (cw + 8)
+      page.drawRectangle({ x, y: y - 40, width: cw, height: 46, color: SOFT, borderColor: LINE, borderWidth: 0.6 })
+      page.drawText(l, { x: x + 12, y: y - 12, size: 8, font: reg, color: GRAY })
+      page.drawText(sar(v, semi, 11, cw - 24)[0], { x: x + 12, y: y - 30, size: 11, font: semi, color: INK })
+    })
+    y -= 54
+  }
+  cipSatiri([['Elinde', k.durum], ['Canlı yayın izni', k.yayin], ['Fight Club üyesi', k.uye]])
+  cipSatiri([['Aylık bütçe', k.butce], ['Sermaye', k.sermaye]])
+  y -= 16
 
   // Alanlar
   for (const [label, value] of satirlar(k)) {
@@ -111,25 +115,45 @@ export async function kartPdf(k, { ref, tarih, ic = false }) {
   }
 
   if (ic) {
-    yeniSayfa()
-    page.drawText('İnceleme', { x: M, y, size: 20, font: bold, color: INK })
-    y -= 18
-    page.drawText(`${k.proje} · ${k.ad}`, { x: M, y, size: 10, font: reg, color: GRAY })
-    y -= 30
-    const sorular = ['1 · Problem gerçek mi?', '2 · Kim için, net mi?', '3 · Kapsam bu hafta bitecek kadar küçük mü?', '4 · Para eden taraf nerede?', 'Sıradaki adım']
-    for (const s of sorular) {
-      page.drawText(s, { x: M, y, size: 11, font: semi, color: INK })
-      y -= 10
-      page.drawRectangle({ x: M, y: y - 84, width: W - 2 * M, height: 84, borderColor: LINE, borderWidth: 0.8 })
-      y -= 104
+    // Bizim kopyamız: iki rapor için boş not sayfaları
+    const notSayfasi = (baslik, alt, maddeler) => {
+      yeniSayfa()
+      page.drawText(baslik, { x: M, y, size: 20, font: bold, color: INK })
+      y -= 18
+      page.drawText(`${k.proje} · ${k.ad} · Bütçe: ${k.butce} · Sermaye: ${k.sermaye}`, { x: M, y, size: 9, font: reg, color: GRAY })
+      y -= 14
+      page.drawText(alt, { x: M, y, size: 9, font: reg, color: GRAY })
+      y -= 26
+      const h = Math.floor((y - 70 - maddeler.length * 22) / maddeler.length)
+      for (const [m, karar] of maddeler) {
+        page.drawText(m, { x: M, y, size: 11, font: semi, color: INK })
+        if (karar) {
+          let x = M + semi.widthOfTextAtSize(m, 11) + 16
+          for (const s2 of ['Devam', 'Daralt', 'Çevir']) {
+            page.drawRectangle({ x, y: y - 2, width: 10, height: 10, borderColor: INK, borderWidth: 0.8 })
+            page.drawText(s2, { x: x + 15, y, size: 10, font: reg, color: INK })
+            x += 72
+          }
+        }
+        y -= 8
+        page.drawRectangle({ x: M, y: y - h, width: W - 2 * M, height: h, borderColor: LINE, borderWidth: 0.8 })
+        y -= h + 14
+      }
     }
-    page.drawText('Karar:', { x: M, y, size: 11, font: semi, color: INK })
-    let x = M + 52
-    for (const s of ['Devam', 'Daralt', 'Çevir']) {
-      page.drawRectangle({ x, y: y - 2, width: 11, height: 11, borderColor: INK, borderWidth: 0.8 })
-      page.drawText(s, { x: x + 17, y, size: 11, font: reg, color: INK })
-      x += 90
-    }
+    notSayfasi('İş raporu: tutar mı?', 'Dört soru: problem gerçek mi · kim için · kapsam küçük mü · para eden taraf nerede', [
+      ['1 · Karar', true],
+      ['2 · Pazar ve kişi: problem gerçek mi, kim için?'],
+      ['3 · Ürün: ne eklenmeli, ne çıkarılmalı?'],
+      ['4 · Pazarlama: ilk 10 müşteri nereden, hangi kanal, hangi mesaj?'],
+      ['5 · Fiyat ve gelir: kim öder, nasıl? Bütçe ve sermayeyle uyumlu mu?'],
+    ])
+    notSayfasi('Teknik yol haritası', 'Bütçeye uygun araçlarla, hafta hafta', [
+      ['1 · Mimari ve araçlar'],
+      ['2 · Yol: 1. hafta / 2. hafta / 3. hafta / 4. hafta'],
+      ['3 · Takıldığı yerin çözümü'],
+      ['4 · Aylık maliyet tahmini (bütçeyle karşılaştır)'],
+      ['5 · Bu hafta: tek teknik iş + ilgili ders'],
+    ])
   }
 
   return Buffer.from(await doc.save())

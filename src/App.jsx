@@ -219,7 +219,7 @@ export default function App() {
                   <span className="text-sm font-semibold text-[#010101] lg:text-white">Proje kartı</span>
                 </div>
                 <p className="text-sm leading-relaxed text-[#010101]/80 lg:text-white/80">
-                  Problem ne, kim için, şu an ne var, nerede takıldın. Kartı gönder; projene bakıp sıradaki adımı yazılı olarak dönelim.
+                  Problem ne, kim için, nerede takıldın, bütçen ne. Kartı gönder; sana iş raporu ve teknik yol haritası dönelim.
                 </p>
                 <div className="mt-4 flex items-center gap-3 sm:mt-5">
                   <span className="flex h-9 w-9 items-center justify-center rounded-full bg-black">
@@ -227,7 +227,7 @@ export default function App() {
                   </span>
                   <div>
                     <div className="text-sm font-semibold text-[#010101] lg:text-white">5 dakika</div>
-                    <div className="text-xs text-[#010101]/60 lg:text-white/60">10 kısa alan</div>
+                    <div className="text-xs text-[#010101]/60 lg:text-white/60">iki rapor</div>
                   </div>
                 </div>
               </div>
@@ -255,7 +255,7 @@ export default function App() {
         <section id="bakis" className="scroll-mt-20 px-5 pb-24 sm:px-8 sm:pb-32 lg:px-12">
           <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2 lg:gap-20">
             <div>
-              <SectionHead eyebrow="İnceleme çerçevesi" title="Her projeye" accent="aynı dört soru." text="Raporun bu dört soruya cevap verir. İstersen önce kendin cevapla, sonra raporla karşılaştır." />
+              <SectionHead eyebrow="İnceleme çerçevesi" title="Her projeye" accent="aynı dört soru." text="İş raporun bu dört soruya cevap verir: tutar mı, ne eklenmeli, nasıl pazarlanır. Teknik yol haritası da bütçene göre adım adım yolu çizer." />
               <ol className="mt-10 grid gap-3">
                 {QUESTIONS.map((x, i) => (
                   <Reveal as="li" key={x.q} delay={i * 70} className="flex gap-5 rounded-2xl bg-white/[0.04] p-5 ring-1 ring-white/10">
@@ -436,7 +436,7 @@ export default function App() {
             <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
               Projeni getir, <em className="font-serif font-normal text-white/50">birlikte inceleyelim.</em>
             </h2>
-            <p className="mx-auto mt-5 max-w-md text-white/55">On kısa alan, beş dakika. Projen hangi aşamada olursa olsun.</p>
+            <p className="mx-auto mt-5 max-w-md text-white/55">Beş dakika, iki rapor: iş raporu ve teknik yol haritası. Projen hangi aşamada olursa olsun.</p>
             <div className="mt-8 flex justify-center">
               <CardButton className="px-9 py-4 text-base" />
             </div>
@@ -500,7 +500,7 @@ function Kvkk() {
       <H>Veri sorumlusu</H>
       <p>Alta AI Teknoloji Ltd. Şti. (2diffpov · Fight Club)<br />MERSİS: 0059142841500001<br />Mecidiyeköy Mah. Selahattin Pınar Aralığı Sok. Hüseyin Özer İş Merkezi No:3 D:8 Şişli / İstanbul<br />E-posta: <a href={`mailto:${MAIL}`} className="text-white underline underline-offset-2">{MAIL}</a></p>
       <H>İşlenen veriler</H>
-      <p>Adın, e-posta adresin, projene ilişkin yazdığın bilgiler (problem, hedef kitle, link, takıldığın yer, isteklerin), canlı yayın tercihin ve Fight Club üyelik durumun.</p>
+      <p>Adın, e-posta adresin, projene ilişkin yazdığın bilgiler (problem, hedef kitle, link, takıldığın yer, isteklerin), bütçe ve sermaye aralığın, canlı yayın tercihin ve Fight Club üyelik durumun.</p>
       <H>İşleme amacı ve hukuki sebep</H>
       <p>Verilerin projeni incelemek, sana e-postayla dönüş yapmak ve istersen kartını canlı yayında ele almak amacıyla, formda verdiğin açık rızaya dayanarak işlenir.</p>
       <H>Aktarım</H>
