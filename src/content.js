@@ -24,6 +24,7 @@ export const NAV = [
   { label: 'Projeler', href: '#projeler' },
   { label: 'Fight Club', href: '#fightclub' },
   { label: 'SSS', href: '#sss' },
+  { label: 'Cephanelik', href: '/cephanelik' },
 ]
 
 export const STEPS = [
