@@ -12,6 +12,10 @@
     {
       "source": "/kart",
       "destination": "/index.html"
+    },
+    {
+      "source": "/cephanelik",
+      "destination": "/cephanelik/index.html"
     }
   ]
 }

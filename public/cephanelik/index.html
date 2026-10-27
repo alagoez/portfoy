@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cephanelik · Fight Club</title>
+<meta name="description" content="Yapay zekâ ajanların için seçilmiş açık kaynak skill'ler ve Türkçe n8n şablonları. Fight Club'ın ücretsiz cephaneliği.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://www.2diffpov.com.tr/cephanelik">
+<meta property="og:title" content="Cephanelik · Fight Club">
+<meta property="og:description" content="Yapay zekâ ajanın için seçilmiş açık kaynak skill'ler ve Türkçe n8n şablonları.">
+<meta property="og:image" content="https://www.2diffpov.com.tr/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@500;600&family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;0,6..96,800;1,6..96,400;1,6..96,500&family=Saira+Semi+Condensed:wght@900&display=swap">
+<link rel="stylesheet" href="/cephanelik/stil.css">
+</head>
+<body>
+
+<header class="ust">
+  <a class="logo" href="#"><span class="fc">FIGHT CLUB</span><span class="logo-alt">Cephanelik</span></a>
+  <nav>
+    <a href="#liste" class="ust-link">Kütüphane</a>
+    <a href="https://www.skool.com/diffpov-akademi-8549/about" class="buton kucuk" target="_blank" rel="noopener">Kulübe katıl</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-kunye"><span>SAYI 01</span><span>AÇIK KAYNAK</span><span>ÜCRETSİZ</span></div>
+  <h1>Cephanelik</h1>
+  <p class="hero-spot">Yapay zekâ ajanın için <em>en çok kullanılan</em> skill'ler ve <em>Türkçe</em> n8n şablonları. Tek yerde, sıralı, kurulum komutuyla.</p>
+  <div class="hero-sayilar">
+    <div><b id="say-skill">0</b><span>açık kaynak skill</span></div>
+    <div><b id="say-sablon">0</b><span>n8n şablonu</span></div>
+    <div><b id="say-kategori">0</b><span>kategori</span></div>
+  </div>
+  <label class="arama">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="ara" type="search" placeholder="Ara: tasarım, supabase, randevu, instagram…" autocomplete="off">
+  </label>
+</section>
+
+<main id="liste">
+  <div class="sekmeler" role="tablist">
+    <button class="sekme aktif" data-sekme="skill" role="tab">Skill'ler <span id="sekme-skill"></span></button>
+    <button class="sekme" data-sekme="sablon" role="tab">n8n şablonları <span id="sekme-sablon"></span></button>
+  </div>
+  <div class="cipler" id="cipler"></div>
+  <ol class="kartlar" id="kartlar"></ol>
+  <p class="bos" id="bos" hidden>Bu aramayla eşleşen bir şey yok.</p>
+</main>
+
+<section class="kapanis">
+  <div class="kapanis-ic">
+    <small>BUNLARI TEK BAŞINA KURMA</small>
+    <h2>Cephaneliği bulmak kolay.<br><em>Kullanmak işin zor kısmı.</em></h2>
+    <p>Fight Club'da 10 saatlik yolu bitiriyorsun, projeni getiriyorsun, birlikte bitirip videoyla satıyoruz. Şablonların Türkçe, test notlu sürümleri içeride.</p>
+    <a class="buton" href="https://www.skool.com/diffpov-akademi-8549/about" target="_blank" rel="noopener">Kulübe katıl · 9$/ay</a>
+    <span class="kapanis-not">İlk 50 üyeye · İstediğin ay iptal</span>
+  </div>
+</section>
+
+<footer class="alt">
+  <p>Skill'ler ve şablonlar ilgili yazarlarına aittir; her kartta kaynak ve lisans yazılıdır. Cephanelik bir seçkidir, hiçbirinin sahibi değildir.</p>
+  <p>Sıralama GitHub yıldız sayısına göredir. Seçkiye ilham: skill-issue.in · <span class="fc kucuk-fc">FIGHT CLUB</span> · Alta AI</p>
+</footer>
+
+<div class="tost" id="tost" role="status"></div>
+
+<script src="/cephanelik/veri.js"></script>
+<script src="/cephanelik/uygulama.js"></script>
+</body>
+</html>
